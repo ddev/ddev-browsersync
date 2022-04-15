@@ -1,4 +1,4 @@
-# tyler36/ddev-browsersycn <!-- omit in toc -->
+# tyler36/ddev-browsersync <!-- omit in toc -->
 
 [![tests](https://github.com/tyler36/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/tyler36/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2022.svg)
 
