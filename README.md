@@ -60,8 +60,9 @@ Generally, you will need to provide 3 configured options.
 - `host` is your DDEV HOST name
 - `open` prevents the following message from being displayed
 
-"[Browsersync] Couldn't open browser (if you are using BrowserSync in a headless environment, you might want to set the open option to false)
-"
+```shell
+[Browsersync] Couldn't open browser (if you are using BrowserSync in a headless environment, you might want to set the open option to false)
+```
 
 Some examples are below.
 
