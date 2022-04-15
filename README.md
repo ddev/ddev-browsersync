@@ -1,42 +1,164 @@
-[![tests](https://github.com/drud/ddev-addon-template/actions/workflows/tests.yml/badge.svg)](https://github.com/drud/ddev-addon-template/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2022.svg)
+# tyler36/ddev-browsersycn <!-- omit in toc -->
 
-## What is ddev-addon-template?
+[![tests](https://github.com/tyler36/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/tyler36/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2022.svg)
 
-This repository is a template for providing [DDEV](https://ddev.readthedocs.io) addons and services.
+- [Introduction](#introduction)
+- [Requirements](#requirements)
+- [Steps](#steps)
+  - [Laravel-mix example](#laravel-mix-example)
+  - [Gulp](#gulp)
+- [Note](#note)
+- [Errors](#errors)
+  - ['400 Bad Request: The plain HTTP request was sent to HTTPS port'](#400-bad-request-the-plain-http-request-was-sent-to-https-port)
+- [TODO](#todo)
 
-In ddev v1.19+ addons can be installed from the command line using the `ddev get` command, for example, `ddev get drud/ddev-addon-template` or `ddev get drud/ddev-drupal9-solr`.
+## Introduction
 
-A repository like this one is the way to get started. You can create a new repo from this one by clicking the template button in the top right corner of the page.
+[Browsersync](https://browsersync.io/) is free software that features:
 
-![template button](images/template-button.png)
+- live reloads
+- click mirroring
+- network throttling
 
-## Components of the repository
+This reciepe allows you to run [Browsersync](https://browsersync.io/) through the DDEV web service.
 
-* The fundamental contents of the add-on service or other component. For example, in this template there is a [docker-compose.addon-template.yaml](docker-compose.addon-template.yaml) file.
-* An [install.yaml](install.yaml) file that describes how to install the service or other component.
-* A test suite in [test.bats](tests/test.bats) that makes sure the service continues to work as expected.
-* [Github actions setup](.github/workflows/tests.yml) so that the tests run automatically when you push to the repository.
+## Requirements
 
-## Getting started
+- DDEV >= 1.19
+- Windows or Linux
+- BrowserSync
 
-1. Choose a good descriptive name for your add-on. It should probably start with "ddev-" and include the basic service or functionality. If it's particular to a specific CMS, perhaps `ddev-<CMS>-servicename`.
-2. Create the new template repository by using the template button.
-3. Globally replace "addon-template" with the name of your add-on.
-4. Add the files that need to be added to a ddev project to the repository. For example, you might remove `docker-composeaddon-template.yaml` with the `docker-compose.*.yaml` for your recipe.
-5. Update the install.yaml to give the necessary instructions for installing the add-on.
-  * The fundamental line is the `project_files` directive, a list of files to be copied from this repo into the project `.ddev` directory.
-  * You can optionally add files to the `global_files` directive as well, which will cause files to be placed in the global `.ddev` directory, `~/.ddev`.
-  * Finally, `pre_install_commands` and `post_install_commands` are supported. These can use the host-side environment variables documented [in ddev docs](https://ddev.readthedocs.io/en/stable/users/extend/custom-commands/#environment-variables-provided).
-6. Update `tests/test.bats` to provide a reasonable test for the repository. You can run it manually with `bats tests` and it will be run on push and nightly as well. Please make sure to attend to test failures when they happen. Others will be depending on you. `bats` is a simple testing framework that just uses `bash`. You can install it with `brew install bats-core` or [see other techniques](https://bats-core.readthedocs.io/en/stable/installation.html). See [bats tutorial](https://bats-core.readthedocs.io/en/stable/).
-7. When everything is working, including the tests, you can push the repository to GitHub.
-8. Create a release on GitHub.
-9. Test manually with `ddev get <owner/repo>`.
-10. Update the README.md to describe the add-on, how to use it, and how to contribute. If there are any manual actions that have to be taken, please explain them. If it requires special configuration of the using project, please explain how to do those. Examples in [drud/ddev-drupal9-solr](https://github.com/drud/ddev-drupal9-solr), [drud/ddev-memcached](github.com/drud/ddev-memcached), and [drud/ddev-beanstalkd](https://github.com/drud/ddev-beanstalkd).
-11. Add a good short description to your repo, and add the label "ddev-get". It will immediately be added to the list provided by `ddev get --list --all`.
-12. When it has matured you will hopefully want to have it become an "official" maintained add-on. Open an issue in the [ddev queue](https://github.com/drud/ddev/issues) for that.
+There are many options to install and run browsersync, including:
 
-**Contributed and maintained by [@CONTRIBUTOR](https://github.com/CONTRIBUTOR) based on the original [ddev-contrib recipe](https://github.com/drud/ddev-contrib/tree/master/docker-compose-services/RECIPE) by [@CONTRIBUTOR](https://github.com/CONTRIBUTOR)**
+- [Gulp](https://browsersync.io/docs/gulp)
+- [Grunt](https://browsersync.io/docs/grunt)
+- [Laravel-mix](https://laravel-mix.com/docs/4.0/browsersync)
 
-**Originally Contributed by [somebody](https://github.com/somebody) in https://github.com/drud/ddev-contrib/...)
+Please see [Browsersync documentation](https://browsersync.io/docs) for more details.
 
+## Steps
 
+- Install service
+
+```shell
+ddev get tyler36/ddev-browsersync
+ddev restart
+```
+
+- Update browersync configuration
+
+This will depend on your implemenation of browser.
+Generally, you will need to provide 3 configured options.
+
+{
+      proxy: url,
+      host:  url,
+      open:  false,
+}
+
+- `proxy` is your DDEV HOST name
+- `host` is your DDEV HOST name
+- `open` prevents the following message from being displayed
+
+"[Browsersync] Couldn't open browser (if you are using BrowserSync in a headless environment, you might want to set the open option to false)
+"
+
+Some examples are below.
+
+### Laravel-mix example
+
+Demo: <https://github.com/tyler36/browsersync-demo>
+Assumes your DDEV HOST is `browsersync-demo.ddev.site`
+
+- Update `webpack.mix.js`
+
+```js
+let url = 'browsersync-demo.ddev.site';
+
+mix.js('resources/js/app.js', 'public/js')
+    .postCss('resources/css/app.css', 'public/css', [
+        //
+    ])
+    .browserSync({
+        proxy: url,
+        host:  url,
+        open:  false,
+    });
+```
+
+- Start browsersync service
+
+```shell
+ddev exec npm run watch
+```
+
+- Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
+
+### Gulp
+
+Assumes your DDEV HOST is `browsersync-demo.ddev.site`
+
+- Update `gulpfile.js`
+
+```js
+var gulp        = require('gulp');
+var browserSync = require('browser-sync').create();
+
+let url = 'browsersync-demo.ddev.site';
+
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        proxy: url,
+        host:  url,
+        open:  false,
+        files: ['./public'],
+    });
+});
+```
+
+- Start browsersync service
+
+```shell
+ddev exec gulp
+```
+
+- Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
+
+## Note
+
+Browsersync, when running, will output something similar to below.
+
+```shell
+[Browsersync] Proxying: http://browsersync-demo.ddev.site
+[Browsersync] Access URLs:
+ ---------------------------------------------------
+       Local: http://localhost:3000
+    External: http://browsersync-demo.ddev.site:3000
+ ---------------------------------------------------
+          UI: http://localhost:3001
+ UI External: http://localhost:3001
+```
+
+Due to the way DDEV route works, these URLs will **not** work!
+
+You must use the HTTPS address with the port.
+
+- ❌ `http://browsersync-demo.ddev.site:3000`
+- ✅ `https://browsersync-demo.ddev.site:3000`
+
+## Errors
+
+### '400 Bad Request: The plain HTTP request was sent to HTTPS port'
+
+- Access the site via HTTPS, and **not** the HTTP address shown.EG.
+  - ❌ `http://browsersync-demo.ddev.site:3000`
+  - ✅ `https://browsersync-demo.ddev.site:3000`
+
+This is due to how DDEV router works.
+
+## TODO
+
+- Browsersync should display correct HTTPS external URL
+- Proper tests
+
+**Contributed and maintained by [tyler36](https://github.com/tyler36)**
