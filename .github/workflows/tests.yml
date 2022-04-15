@@ -1,0 +1,77 @@
+name: tests
+on:
+  pull_request:
+  push:
+    branches: [ master, main ]
+
+  schedule:
+  - cron: '01 07 * * *'
+
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        description: 'Debug with tmate set "debug_enabled"'
+        required: false
+        default: "false"
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  NIGHTLY_DDEV_PR_URL: "https://nightly.link/drud/ddev/actions/runs/1720215802/ddev-linux-amd64.zip"
+
+jobs:
+  tests:
+    defaults:
+      run:
+        shell: bash
+
+    strategy:
+      matrix:
+        ddev_version: [stable, edge, HEAD]
+#        ddev_version: [PR]
+      fail-fast: false
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Environment setup
+      run: |
+        brew install bats-core mkcert
+        mkcert -install
+
+    - name: Use ddev stable
+      if: matrix.ddev_version == 'stable'
+      run: brew install drud/ddev/ddev
+
+    - name: Use ddev edge
+      if: matrix.ddev_version == 'edge'
+      run: brew install drud/ddev-edge/ddev
+
+    - name: Use ddev HEAD
+      if: matrix.ddev_version == 'HEAD'
+      run: brew install --HEAD drud/ddev/ddev
+
+    - name: Use ddev PR
+      if: matrix.ddev_version == 'PR'
+      run: |
+        curl -sSL -o ddev_linux.zip ${NIGHTLY_DDEV_PR_URL}
+        unzip ddev_linux.zip
+        mv ddev /usr/local/bin/ddev && chmod +x /usr/local/bin/ddev
+
+    - name: Download docker images
+      run: | 
+        mkdir junk && pushd junk && ddev config --auto && ddev debug download-images >/dev/null
+        docker pull memcached:1.6 >/dev/null
+    - name: tmate debugging session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        limit-access-to-actor: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+
+    - name: tests
+      run: bats tests
+
