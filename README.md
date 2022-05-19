@@ -69,7 +69,8 @@ Assumes your DDEV HOST is `browsersync-demo.ddev.site`
 - Update `webpack.mix.js`
 
 ```js
-let url = 'browsersync-demo.ddev.site';
+// Use the HOSTNAME provided by DDEV
+let url = process.env.DDEV_HOSTNAME;
 
 mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
