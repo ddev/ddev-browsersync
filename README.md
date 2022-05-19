@@ -6,9 +6,6 @@
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
   - [Laravel-mix example](#laravel-mix-example)
-- [Note](#note)
-- [Errors](#errors)
-  - ['400 Bad Request: The plain HTTP request was sent to HTTPS port'](#400-bad-request-the-plain-http-request-was-sent-to-https-port)
 - [TODO](#todo)
 
 ## Introduction
@@ -89,15 +86,7 @@ mix.js('resources/js/app.js', 'public/js')
 
 ```shell
 ddev exec npm run watch
-```
-
-- Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
-
-## Note
-
-Browsersync, when running, will output something similar to below.
-
-```shell
+...
 [Browsersync] Proxying: http://browsersync-demo.ddev.site
 [Browsersync] Access URLs:
  ---------------------------------------------------
@@ -108,26 +97,11 @@ Browsersync, when running, will output something similar to below.
  UI External: http://localhost:3001
 ```
 
-Due to the way DDEV route works, these URLs will **not** work!
-
-You must use the HTTPS address with the port.
-
-- ❌ `http://browsersync-demo.ddev.site:3000`
-- ✅ `https://browsersync-demo.ddev.site:3000`
-
-## Errors
-
-### '400 Bad Request: The plain HTTP request was sent to HTTPS port'
-
-- Access the site via HTTPS, and **not** the HTTP address shown.EG.
-  - ❌ `http://browsersync-demo.ddev.site:3000`
-  - ✅ `https://browsersync-demo.ddev.site:3000`
-
-This is due to how DDEV router works.
+- Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
 
 ## TODO
 
-- Browsersync should display correct HTTPS external URL
+- Browsersync proxy HTTPS version
 - Proper tests
 
 **Contributed and maintained by [tyler36](https://github.com/tyler36)**
