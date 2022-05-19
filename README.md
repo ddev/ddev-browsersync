@@ -4,9 +4,8 @@
 
 - [Introduction](#introduction)
 - [Requirements](#requirements)
-- [Steps](#steps)
+- [Getting Started](#getting-started)
   - [Laravel-mix example](#laravel-mix-example)
-  - [Gulp](#gulp)
 - [Note](#note)
 - [Errors](#errors)
   - ['400 Bad Request: The plain HTTP request was sent to HTTPS port'](#400-bad-request-the-plain-http-request-was-sent-to-https-port)
@@ -28,17 +27,9 @@ This reciepe allows you to run [Browsersync](https://browsersync.io/) through th
 - Windows or Linux
 - BrowserSync
 
-There are many options to install and run browsersync, including:
+## Getting Started
 
-- [Gulp](https://browsersync.io/docs/gulp)
-- [Grunt](https://browsersync.io/docs/grunt)
-- [Laravel-mix](https://laravel-mix.com/docs/4.0/browsersync)
-
-Please see [Browsersync documentation](https://browsersync.io/docs) for more details.
-
-## Steps
-
-- Install service
+- Install DDEV service
 
 ```shell
 ddev get tyler36/ddev-browsersync
@@ -47,7 +38,7 @@ ddev restart
 
 - Update browersync configuration
 
-This will depend on your implemenation of browser.
+This will depend on your implemenation of browsersync.
 Generally, you will need to provide 3 configured options.
 
 {
@@ -64,7 +55,14 @@ Generally, you will need to provide 3 configured options.
 [Browsersync] Couldn't open browser (if you are using BrowserSync in a headless environment, you might want to set the open option to false)
 ```
 
-Some examples are below.
+There are many options to install and run browsersync, including:
+
+- [Laravel-mix](https://laravel-mix.com/docs/4.0/browsersync)
+- [Gulp](https://browsersync.io/docs/gulp)
+- [Grunt](https://browsersync.io/docs/grunt)
+
+Please see [Browsersync documentation](https://browsersync.io/docs) for more details.
+PRs for install steps for specific frameworks are welcome.
 
 ### Laravel-mix example
 
@@ -91,36 +89,6 @@ mix.js('resources/js/app.js', 'public/js')
 
 ```shell
 ddev exec npm run watch
-```
-
-- Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
-
-### Gulp
-
-Assumes your DDEV HOST is `browsersync-demo.ddev.site`
-
-- Update `gulpfile.js`
-
-```js
-var gulp        = require('gulp');
-var browserSync = require('browser-sync').create();
-
-let url = 'browsersync-demo.ddev.site';
-
-gulp.task('browser-sync', function() {
-    browserSync.init({
-        proxy: url,
-        host:  url,
-        open:  false,
-        files: ['./public'],
-    });
-});
-```
-
-- Start browsersync service
-
-```shell
-ddev exec gulp
 ```
 
 - Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
