@@ -16,43 +16,23 @@
 - click mirroring
 - network throttling
 
-This reciepe allows you to run [Browsersync](https://browsersync.io/) through the DDEV web service.
-
-## Requirements
-
-- DDEV >= 1.19
-- Windows or Linux
-- BrowserSync
+This add-on allows you to run [Browsersync](https://browsersync.io/) through the DDEV web service.
 
 ## Getting Started
 
-- Install DDEV add-on
+- Install the DDEV browsersync add-on:
 
 ```shell
 ddev get tyler36/ddev-browsersync
 ddev restart
+ddev browsersync
 ```
 
-- Update browersync configuration
+The new `ddev browsersync` global command runs browsersync inside the web container and provides a 
+link to the browsersync-update URL.
 
-This will depend on your implemenation of browsersync.
-Generally, you will need to provide 3 configured options.
-
-{
-      proxy: url,
-      host:  url,
-      open:  false,
-}
-
-- `proxy` is your DDEV HOST name
-- `host` is your DDEV HOST name
-- `open` prevents the following message from being displayed
-
-```shell
-[Browsersync] Couldn't open browser (if you are using BrowserSync in a headless environment, you might want to set the open option to false)
-```
-
-There are many options to integrate browsersync into your project, including:
+## Other ways to use 
+There are many other options to integrate browsersync into your project, including:
 
 - [Grunt](https://browsersync.io/docs/grunt)
 - [Laravel-mix](https://laravel-mix.com/docs/4.0/browsersync)
@@ -61,14 +41,16 @@ There are many options to integrate browsersync into your project, including:
 Please see [Browsersync documentation](https://browsersync.io/docs) for more details.
 PRs for install steps for specific frameworks are welcome.
 
-### Simplest HTML example
+### Simplest project example
 
-TODO
+The existing example with just `ddev browsersync` should work out of the box.
+There is no need for additional configuration, but you may want to edit
+the `.ddev/browser-sync.js` file to specify exactly what files and directories
+should be watched. If you watch less things it's easier on your computer.
 
 ### Laravel-mix example
 
 Demo: <https://github.com/tyler36/browsersync-demo>
-Assumes your DDEV HOST is `browsersync-demo.ddev.site`
 
 - Update `webpack.mix.js`
 
@@ -81,9 +63,10 @@ mix.js('resources/js/app.js', 'public/js')
         //
     ])
     .browserSync({
-        proxy: url,
+        proxy: "localhost",
         host:  url,
         open:  false,
+        ui: false
     });
 ```
 
@@ -98,8 +81,6 @@ ddev exec npm run watch
        Local: http://localhost:3000
     External: http://browsersync-demo.ddev.site:3000
  ---------------------------------------------------
-          UI: http://localhost:3001
- UI External: http://localhost:3001
 ```
 
 - Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
