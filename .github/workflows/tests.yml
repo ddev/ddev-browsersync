@@ -40,7 +40,7 @@ jobs:
     - name: Environment setup
       run: |
         brew install bats-core
-        sudo apt-get update && sudo apt-get install -y expect
+        sudo apt-get update >/dev/null && sudo apt-get install -y expect >/dev/null
 
     - name: Use ddev stable
       if: matrix.ddev_version == 'stable'
