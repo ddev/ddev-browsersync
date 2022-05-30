@@ -1,0 +1,8 @@
+#!/bin/bash
+
+## Description: Run browser-sync in the web container
+## Usage: browsersync
+## Example: "ddev browsersync"
+## ExecRaw: true
+
+browser-sync start -c .ddev/browser-sync.js

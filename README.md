@@ -26,7 +26,7 @@ This reciepe allows you to run [Browsersync](https://browsersync.io/) through th
 
 ## Getting Started
 
-- Install DDEV service
+- Install DDEV add-on
 
 ```shell
 ddev get tyler36/ddev-browsersync
@@ -52,14 +52,18 @@ Generally, you will need to provide 3 configured options.
 [Browsersync] Couldn't open browser (if you are using BrowserSync in a headless environment, you might want to set the open option to false)
 ```
 
-There are many options to install and run browsersync, including:
+There are many options to integrate browsersync into your project, including:
 
-- [Laravel-mix](https://laravel-mix.com/docs/4.0/browsersync)
-- [Gulp](https://browsersync.io/docs/gulp)
 - [Grunt](https://browsersync.io/docs/grunt)
+- [Laravel-mix](https://laravel-mix.com/docs/4.0/browsersync)
+
 
 Please see [Browsersync documentation](https://browsersync.io/docs) for more details.
 PRs for install steps for specific frameworks are welcome.
+
+### Simplest HTML example
+
+TODO
 
 ### Laravel-mix example
 
