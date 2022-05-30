@@ -7,9 +7,11 @@ setup() {
   export PROJNAME=ddev-browsersync
   export DDEV_NON_INTERACTIVE=true
   ddev delete -Oy ${PROJNAME} || true
+  cp tests/run-ddev-browsersync "${TESTDIR}"
   cd "${TESTDIR}"
   ddev config --project-name=${PROJNAME}
-  ddev start
+  echo "<html><head></head><body>this is a test</body>" >index.html
+  ddev start -y
 }
 
 teardown() {
@@ -25,6 +27,9 @@ teardown() {
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ${DIR}
   ddev restart
+  ./run-ddev-browsersync &
+  sleep 5
+  curl -s --fail http://${PROJNAME}.ddev.site:3000 | grep "this is a test"
 }
 
 @test "install from release" {
