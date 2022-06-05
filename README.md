@@ -57,6 +57,13 @@ There is no need for additional configuration, but you may want to edit
 the `.ddev/browser-sync.js` file to specify exactly what files and directories
 should be watched. If you watch less things it's easier on your computer.
 
+### Problems
+
+* If you get `Error: ENOSPC: System limit for number of file watchers reached, watch '/var/www/html/web/core/themes/classy/images/icons/video-x-generic.png'` it means you either have to increase the file watcher limit or decrease the number of files you're watching.
+  * To decrease the number of files you're watching, edit the `ignore` section in `browser-sync.js` (or another config file if you have a more complex setup).
+  * On colima, `colima ssh` and `sudo sysctl fs.inotify.max_user_watches` to see how many watches you have. To increase it (Default is often 8192), use something like `sudo sysctl -w fs.inotify.max_user_watches=1048576`
+  * On Docker Desktop for Mac, `docker run -it --privileged --pid=host justincormack/nsenter1` and `sysctl -w fs.inotify.max_user_watches=1048576`
+
 ### Laravel-mix configuration
 
 Demo: <https://github.com/tyler36/browsersync-demo>

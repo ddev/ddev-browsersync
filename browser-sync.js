@@ -1,11 +1,11 @@
 // #ddev-generated
 let url = process.env.DDEV_HOSTNAME;
-let docroot = process.env.DDEV_DOCROOT;
+let filesdir = process.env.DDEV_FILES_DIR;
 
 module.exports = {
 
     files: [docroot],
-    ignore: ["node_modules", docroot + "/sites/default/files", "vendor"],
+    ignore: ["node_modules", filesdir, "vendor"],
     open: false,
     ui: false,
     server: false,
