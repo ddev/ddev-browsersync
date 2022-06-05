@@ -31,7 +31,7 @@ ddev browsersync
 ```
 
 The new `ddev browsersync` global command runs browsersync inside the web container and provides a 
-link ("External") to the browsersync-update URL.
+link ("External") to the browsersync-update URL. Use the URL in the output that says something like "External: http://d9.ddev.site:3000".
 
 ## What does this add-on do and add?
 
