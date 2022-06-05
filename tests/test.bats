@@ -1,6 +1,7 @@
 setup() {
   set -eu -o pipefail
-
+  # Fail early if old ddev is installed
+  ddev debug capabilities | grep multiple-dockerfiles || exit 3
   export DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )/.."
   export TESTDIR=~/tmp/testbrowsersync
   mkdir -p $TESTDIR
