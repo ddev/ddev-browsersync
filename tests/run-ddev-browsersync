@@ -1,0 +1,9 @@
+#!/usr/bin/expect -f
+
+set PROJNAME $::env(PROJNAME)
+set timeout -1
+
+spawn ddev browsersync
+expect "http://${PROJNAME}.ddev.site:3000"
+
+expect "wait forever"
