@@ -9,7 +9,7 @@ if (filesdir === "") {
 
 module.exports = {
 
-    files: [docroot],
+    files: [docroot, "app", "resources/views/**/*.php"],
     ignore: ["node_modules", filesdir, "vendor"],
     open: false,
     ui: false,
