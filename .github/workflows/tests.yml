@@ -39,8 +39,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Environment setup
       run: |
-        brew install bats-core mkcert
-        mkcert -install
+        brew install bats-core
+        sudo apt-get update >/dev/null && sudo apt-get install -y expect >/dev/null
 
     - name: Use ddev stable
       if: matrix.ddev_version == 'stable'

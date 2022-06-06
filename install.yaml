@@ -1,23 +1,20 @@
 name: ddev-browsersync
 
-# pre_install_actions - list of actions to run before installing the addon.
-# Examples would be removing an extraneous docker volume,
-# or doing a sanity check for requirements.
 pre_install_actions:
-# - 'if [ "$(arch)" = "arm64" -o "$(arch)" = "aarch64" ]; then echo "This package does not work on arm64 machines"; exit 1; fi'
-# - "docker volume rm ddev-${DDEV_PROJECT}_solr 2>/dev/null || true"
+- | 
+  if ! ( ddev debug capabilities 2>/dev/null | grep multiple-dockerfiles >/dev/null 2>&1 ) ; then
+    echo "This add-on requires DDEV v1.19.3 or higher, please upgrade." && exit 2
+  fi
 
-# list of files and directories listed that are copied into project .ddev directory
 project_files:
-- docker-compose.browsersync.yaml
-# - extra_files/
-# - somefile.sh
+  - docker-compose.browsersync.yaml
+  - web-build
+  - browser-sync.js
 
-# List of files and directories that are copied into the global .ddev directory
+
 global_files:
-# - commands
-# - homeadditions
+  - commands
+
 
 post_install_actions:
-# - chmod +x ~/.ddev/commands/web/somecommand
-# - perl -pi -e 's/oldstring/newstring/g' docker-compose.addon-template.yaml
+
