@@ -14,7 +14,7 @@ project_files:
 
 
 global_files:
-  - commands
+  - commands/web/browsersync
 
 
 post_install_actions:
