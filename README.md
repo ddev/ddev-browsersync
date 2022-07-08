@@ -1,11 +1,14 @@
-# tyler36/ddev-browsersync <!-- omit in toc -->
+# ddev-browsersync <!-- omit in toc -->
 
-[![tests](https://github.com/tyler36/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/tyler36/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2022.svg)
+[![tests](https://github.com/drud/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/drud/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2022.svg)
 
 - [Introduction](#introduction)
-- [Requirements](#requirements)
 - [Getting Started](#getting-started)
-  - [Laravel-mix example](#laravel-mix-example)
+- [What does this add-on do and add?](#what-does-this-add-on-do-and-add)
+- [Other ways to use browsersync with this add-on](#other-ways-to-use-browsersync-with-this-add-on)
+  - [Basic usage](#basic-usage)
+  - [Problems](#problems)
+  - [Laravel-mix configuration](#laravel-mix-configuration)
 - [TODO](#todo)
 
 ## Introduction
@@ -25,13 +28,13 @@ This add-on requires DDEV v1.19.3 or higher.
 - Install the DDEV browsersync add-on:
 
 ```shell
-ddev get tyler36/ddev-browsersync
+ddev get drud/ddev-browsersync
 ddev restart
 ddev browsersync
 ```
 
 The new `ddev browsersync` global command runs browsersync inside the web container and provides a
-link ("External") to the browsersync-update URL. Use the URL in the output that says something like "External: http://d9.ddev.site:3000".
+link ("External") to the browsersync-update URL. Use the URL in the output that says something like "External: <http://d9.ddev.site:3000>".
 
 ## What does this add-on do and add?
 
@@ -42,6 +45,7 @@ link ("External") to the browsersync-update URL. Use the URL in the output that 
 5. Adds a `ddev browsersync` shell command globally, which lets you easily start browsersync when you want it.
 
 ## Other ways to use browsersync with this add-on
+
 There are many other options to integrate browsersync into your project, including:
 
 - [Grunt](https://browsersync.io/docs/grunt)
@@ -59,16 +63,18 @@ should be watched. If you watch less things it's easier on your computer.
 
 ### Problems
 
-* If you get `Error: ENOSPC: System limit for number of file watchers reached, watch '/var/www/html/web/core/themes/classy/images/icons/video-x-generic.png'` it means you either have to increase the file watcher limit or decrease the number of files you're watching.
-  * To decrease the number of files you're watching, edit the `ignore` section in `browser-sync.js` (or another config file if you have a more complex setup).
-  * On colima, `colima ssh` and `sudo sysctl fs.inotify.max_user_watches` to see how many watches you have. To increase it, use something like `sudo sysctl -w fs.inotify.max_user_watches=2048576`. Unfortunately, this has to be done on every colima restart.
-  * On Docker Desktop for Mac, `docker run -it --privileged --pid=host justincormack/nsenter1` and `sysctl -w fs.inotify.max_user_watches=1048576`. Unfortunately, this has to be done again on every Docker restart.
-  * On Docker Desktop for Windows, add or edit `~/.wslconfig` with these contents:
-    ```
+- If you get `Error: ENOSPC: System limit for number of file watchers reached, watch '/var/www/html/web/core/themes/classy/images/icons/video-x-generic.png'` it means you either have to increase the file watcher limit or decrease the number of files you're watching.
+  - To decrease the number of files you're watching, edit the `ignore` section in `browser-sync.js` (or another config file if you have a more complex setup).
+  - On colima, `colima ssh` and `sudo sysctl fs.inotify.max_user_watches` to see how many watches you have. To increase it, use something like `sudo sysctl -w fs.inotify.max_user_watches=2048576`. Unfortunately, this has to be done on every colima restart.
+  - On Docker Desktop for Mac, `docker run -it --privileged --pid=host justincormack/nsenter1` and `sysctl -w fs.inotify.max_user_watches=1048576`. Unfortunately, this has to be done again on every Docker restart.
+  - On Docker Desktop for Windows, add or edit `~/.wslconfig` with these contents:
+
+    ```config
     [wsl2]
     kernelCommandLine = "fs.inotify.max_user_watches=1048576"
     ```
-  * On Linux, you can change `fs.inotify.max_user_watches` on the host in /etc/sysctl.d/local.conf or elsewhere.
+
+  - On Linux, you can change `fs.inotify.max_user_watches` on the host in /etc/sysctl.d/local.conf or elsewhere.
 
 ### Laravel-mix configuration
 
