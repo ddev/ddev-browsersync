@@ -37,6 +37,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: echo "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
     - name: Environment setup
       run: |
         brew install bats-core
