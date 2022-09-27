@@ -36,8 +36,8 @@ teardown() {
 @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev get tyler36/ddev-browsersync with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get tyler36/ddev-browsersync
+  echo "# ddev get drud/ddev-browsersync with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get drud/ddev-browsersync
   ddev restart
   # ddev exec "curl -s elasticsearch:9200" | grep "${PROJNAME}-elasticsearch"
 }
