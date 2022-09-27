@@ -30,7 +30,7 @@ teardown() {
   ddev restart
   ./run-ddev-browsersync &
   sleep 5
-  curl -s --fail http://${PROJNAME}.ddev.site:3000 | grep "this is a test"
+  curl -s --fail https://${PROJNAME}.ddev.site:3000 | grep "this is a test"
 }
 
 @test "install from release" {
