@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#ddev-generated
 ## Description: Run browser-sync in the web container
 ## Usage: browsersync
 ## Example: "ddev browsersync"
