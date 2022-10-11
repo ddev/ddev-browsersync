@@ -1,7 +1,6 @@
 #ddev-generated
 # Override the web container's standard HTTP_EXPOSE and HTTPS_EXPOSE
 # This is to expose the browsersync port.
-version: '3.6'
 services:
   web:
     expose:
