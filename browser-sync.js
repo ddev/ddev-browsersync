@@ -1,7 +1,9 @@
 // #ddev-generated
 let docroot = process.env.DDEV_DOCROOT;
 let filesdir = process.env.DDEV_FILES_DIR;
-let url = process.env.DDEV_HOSTNAME;
+
+// Explicitly state a single URL (@see https://github.com/drud/ddev-browsersync/issues/27)
+let url = `${process.env.DDEV_PROJECT}.${process.env.DDEV_TLD}`;
 
 if (filesdir === "") {
     filesdir = null
