@@ -39,5 +39,7 @@ teardown() {
   echo "# ddev get drud/ddev-browsersync with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get drud/ddev-browsersync
   ddev restart
-  # ddev exec "curl -s elasticsearch:9200" | grep "${PROJNAME}-elasticsearch"
+  # ./run-ddev-browsersync &
+  # sleep 5
+  # curl -s --fail https://${PROJNAME}.ddev.site:3000 | grep "this is a test"
 }
