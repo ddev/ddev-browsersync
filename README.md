@@ -9,7 +9,6 @@
   - [Basic usage](#basic-usage)
   - [Problems](#problems)
   - [Laravel-mix configuration](#laravel-mix-configuration)
-- [TODO](#todo)
 
 ## Introduction
 
@@ -103,7 +102,7 @@ mix.js('resources/js/app.js', 'public/js')
 ```shell
 ddev exec npm run watch
 ...
-[Browsersync] Proxying: http://browsersync-demo.ddev.site
+[Browsersync] Proxying: http://localhost:3000
 [Browsersync] Access URLs:
  ---------------------------------------------------
        Local: http://localhost:3000
@@ -112,9 +111,5 @@ ddev exec npm run watch
 ```
 
 - Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
-
-## TODO
-
-- Browsersync proxy HTTPS version
 
 **Contributed and maintained by [tyler36](https://github.com/tyler36)**
