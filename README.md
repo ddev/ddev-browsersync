@@ -35,6 +35,11 @@ ddev browsersync
 The new `ddev browsersync` global command runs browsersync inside the web container and provides a
 link ("External") to the browsersync-update URL. Use the URL in the output that says something like "External: <http://d9.ddev.site:3000>".
 
+NOTE: The browsersync'd URL is ***HTTPS***, not HTTP. ddev-router redirects traffic to HTTPS, but browsersync does not know this.
+
+EG.
+"External: <http://d9.ddev.site:3000>" => Access on **<https://d9.ddev.site:3000>**
+
 ## What does this add-on do and add?
 
 1. Checks to make sure the DDEV version is adequate.
@@ -110,6 +115,6 @@ ddev exec npm run watch
  ---------------------------------------------------
 ```
 
-- Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
+- Browsersync will be running on **HTTPS** at `https://browsersync-demo.ddev.site:3000`
 
 **Contributed and maintained by [tyler36](https://github.com/tyler36)**
