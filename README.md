@@ -9,6 +9,7 @@
   - [Basic usage](#basic-usage)
   - [Problems](#problems)
   - [Laravel-mix configuration](#laravel-mix-configuration)
+- [Multiple hostnames](#multiple-hostnames)
 - [TODO](#todo)
 
 ## Introduction
@@ -84,7 +85,7 @@ Demo: <https://github.com/tyler36/browsersync-demo>
 
 ```js
 // Use the HOSTNAME provided by DDEV
-let url = process.env.DDEV_HOSTNAME;
+let url = `${process.env.DDEV_PROJECT}.${process.env.DDEV_TLD}`;
 
 mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
@@ -112,6 +113,13 @@ ddev exec npm run watch
 ```
 
 - Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
+
+## Multiple hostnames
+
+Out-of-box, this addon is designed to work for single hostname environments. If your project uses additional hostnames, or you prefer working with IP addresses,
+
+- comment out the `host: url,` in `./.ddev/browser-sync.js` (and `webpack.mix.js` if you are using Larvael Mix)
+- remove `#ddev-generated` from `./.ddev/browser-sync.js` (and `webpack.mix.js` if you are using Larvael Mix)
 
 ## TODO
 
