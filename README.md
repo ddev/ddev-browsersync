@@ -34,7 +34,7 @@ ddev browsersync
 ```
 
 The new `ddev browsersync` global command runs browsersync inside the web container and provides a
-link ("External") to the browsersync-update URL. Use the URL in the output that says something like "External: <http://d9.ddev.site:3000>".
+link ("External") to the browsersync-update URL. Use the URL in the output that says something like "External: <http://172.28.0.9:3000>".
 
 ## What does this add-on do and add?
 
@@ -83,16 +83,12 @@ Demo: <https://github.com/tyler36/browsersync-demo>
 - Update `webpack.mix.js`
 
 ```js
-// Use the HOSTNAME provided by DDEV
-let url = process.env.DDEV_HOSTNAME;
-
 mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ])
     .browserSync({
         proxy: "localhost",
-        host:  url,
         open:  false,
         ui: false
     });
@@ -107,11 +103,11 @@ ddev exec npm run watch
 [Browsersync] Access URLs:
  ---------------------------------------------------
        Local: http://localhost:3000
-    External: http://browsersync-demo.ddev.site:3000
+    External: http://172.28.0.9:3000
  ---------------------------------------------------
 ```
 
-- Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
+- Browsersync will be running at `https://172.28.0.9:3000`
 
 ## TODO
 
