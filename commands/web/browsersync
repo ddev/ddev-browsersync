@@ -6,4 +6,5 @@
 ## Example: "ddev browsersync"
 ## ExecRaw: true
 
-browser-sync start -c .ddev/browser-sync.js
+echo "Proxying browsersync on ${DDEV_PRIMARY_URL}:3000"
+browser-sync start -c /var/www/html/.ddev/browser-sync.js >/dev/null
