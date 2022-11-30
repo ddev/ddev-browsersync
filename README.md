@@ -9,7 +9,6 @@
   - [Basic usage](#basic-usage)
   - [Problems](#problems)
   - [Laravel-mix configuration](#laravel-mix-configuration)
-- [TODO](#todo)
 
 ## Introduction
 
@@ -23,8 +22,6 @@ This add-on allows you to run [Browsersync](https://browsersync.io/) through the
 
 ## Getting Started
 
-This add-on requires DDEV v1.19.3 or higher.
-
 - Install the DDEV browsersync add-on:
 
 ```shell
@@ -34,7 +31,12 @@ ddev browsersync
 ```
 
 The new `ddev browsersync` global command runs browsersync inside the web container and provides a
-link ("External") to the browsersync-update URL. Use the URL in the output that says something like "External: <http://d9.ddev.site:3000>".
+link to the browsersync proxy URL, something like `https://<project>.ddev.site:3000`.
+
+NOTE: The browsersync'd URL is ***HTTPS***, not HTTP. ddev-router redirects traffic to HTTPS, but browsersync does not know this.
+
+EG.
+"External: <http://d9.ddev.site:3000>" => Access on **<https://d9.ddev.site:3000>**
 
 ## What does this add-on do and add?
 
@@ -103,7 +105,7 @@ mix.js('resources/js/app.js', 'public/js')
 ```shell
 ddev exec npm run watch
 ...
-[Browsersync] Proxying: http://browsersync-demo.ddev.site
+[Browsersync] Proxying: http://localhost:3000
 [Browsersync] Access URLs:
  ---------------------------------------------------
        Local: http://localhost:3000
@@ -111,10 +113,6 @@ ddev exec npm run watch
  ---------------------------------------------------
 ```
 
-- Browsersync will be running at `https://browsersync-demo.ddev.site:3000`
-
-## TODO
-
-- Browsersync proxy HTTPS version
+- Browsersync will be running on **HTTPS** at `https://browsersync-demo.ddev.site:3000`
 
 **Contributed and maintained by [tyler36](https://github.com/tyler36)**
