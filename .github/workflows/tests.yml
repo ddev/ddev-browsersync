@@ -20,6 +20,8 @@ defaults:
 
 env:
   NIGHTLY_DDEV_PR_URL: "https://nightly.link/drud/ddev/actions/runs/1720215802/ddev-linux-amd64.zip"
+  # Allow ddev get to use a github token to prevent rate limiting by tests
+  DDEV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   tests:
