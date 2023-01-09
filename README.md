@@ -1,6 +1,6 @@
 # ddev-browsersync <!-- omit in toc -->
 
-[![tests](https://github.com/drud/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/drud/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2022.svg)
+[![tests](https://github.com/drud/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/drud/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
 
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
