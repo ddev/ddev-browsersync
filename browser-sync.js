@@ -4,8 +4,8 @@ const {createProxyMiddleware} = require('http-proxy-middleware');
 let docroot = process.env.DDEV_DOCROOT;
 let filesdir = process.env.DDEV_FILES_DIR ? process.env.DDEV_FILES_DIR : null;
 // process.env.DDEV_HOSTNAME contains a comma seperated list of all hostnames of the web container
-let env_hostnames = process.env.DDEV_HOSTNAME;
-let hostnames = env_hostnames.split(',')
+let hostnamesFromEnv = process.env.DDEV_HOSTNAME;
+let hostnames = hostnamesFromEnv.split(',')
 let url = hostnames[0];
 let browsersyncPort = 3000;
 let proxies = [];
@@ -14,7 +14,7 @@ let proxies = [];
 hostnames.forEach(function (hostname) {
     proxies.push({
         'hostname': hostname,
-        'middleware': createProxyMiddleware('*', {target: 'https://' + hostname, changeOrigin: true})
+        'middleware': createProxyMiddleware({target: 'https://' + hostname, changeOrigin: true})
     })
 })
 
