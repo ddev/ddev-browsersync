@@ -16,3 +16,9 @@ project_files:
 
 
 post_install_actions:
+- |
+  #ddev-nodisplay
+  #ddev-description:Check for global 'browser-sync.js'
+  if ( test -f "$HOME/.ddev/commands/web/browsersync" ) ; then
+    echo "Note: '~/.ddev/commands/web/browsersync' is no longer required and can be safely removed." && exit 0
+  fi
