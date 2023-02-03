@@ -1,7 +1,7 @@
 name: ddev-browsersync
 
 pre_install_actions:
-- | 
+- |
   #ddev-nodisplay
   #ddev-description:Check for minimum DDEV requirement (v1.19.3)
   if ! ( ddev debug capabilities 2>/dev/null | grep multiple-dockerfiles >/dev/null 2>&1 ) ; then
@@ -12,11 +12,7 @@ project_files:
   - docker-compose.browsersync.yaml
   - web-build/Dockerfile.ddev-browsersync
   - browser-sync.js
-
-
-global_files:
   - commands/web/browsersync
 
 
 post_install_actions:
-
