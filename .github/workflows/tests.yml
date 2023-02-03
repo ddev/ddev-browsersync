@@ -19,7 +19,7 @@ defaults:
     shell: bash
 
 env:
-  NIGHTLY_DDEV_PR_URL: "https://nightly.link/drud/ddev/actions/runs/1720215802/ddev-linux-amd64.zip"
+  NIGHTLY_DDEV_PR_URL: "https://nightly.link/ddev/ddev/actions/runs/1720215802/ddev-linux-amd64.zip"
   # Allow ddev get to use a github token to prevent rate limiting by tests
   DDEV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -53,15 +53,15 @@ jobs:
 
     - name: Use ddev stable
       if: matrix.ddev_version == 'stable'
-      run: brew install drud/ddev/ddev
+      run: brew install ddev/ddev/ddev
 
     - name: Use ddev edge
       if: matrix.ddev_version == 'edge'
-      run: brew install drud/ddev-edge/ddev
+      run: brew install ddev/ddev-edge/ddev
 
     - name: Use ddev HEAD
       if: matrix.ddev_version == 'HEAD'
-      run: brew install --HEAD drud/ddev/ddev
+      run: brew install --HEAD ddev/ddev/ddev
 
     - name: Use ddev PR
       if: matrix.ddev_version == 'PR'

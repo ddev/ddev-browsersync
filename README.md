@@ -1,6 +1,6 @@
 # ddev-browsersync <!-- omit in toc -->
 
-[![tests](https://github.com/drud/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/drud/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
+[![tests](https://github.com/ddev/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/ddev/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
 
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
@@ -25,7 +25,7 @@ This add-on allows you to run [Browsersync](https://browsersync.io/) through the
 - Install the DDEV browsersync add-on:
 
 ```shell
-ddev get drud/ddev-browsersync
+ddev get ddev/ddev-browsersync
 ddev restart
 ddev browsersync
 ```
