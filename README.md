@@ -4,7 +4,6 @@
 
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
-  - [Note](#note)
 - [What does this add-on do and add?](#what-does-this-add-on-do-and-add)
 - [Other ways to use browsersync with this add-on](#other-ways-to-use-browsersync-with-this-add-on)
   - [Basic usage](#basic-usage)
