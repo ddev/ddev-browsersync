@@ -38,7 +38,6 @@ NOTE: The browsersync'd URL is ***HTTPS***, not HTTP. ddev-router redirects traf
 EG.
 "External: <http://d9.ddev.site:3000>" => Access on **<https://d9.ddev.site:3000>**
 
-### Note
 
 From version `2.5.0`, this addon uses a "per-project" approach. This will not affect usage as project-level command have higher priority than global commands.
 
