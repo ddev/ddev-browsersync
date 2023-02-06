@@ -39,7 +39,7 @@ EG.
 "External: <http://d9.ddev.site:3000>" => Access on **<https://d9.ddev.site:3000>**
 
 
-From version `2.5.0`, this addon uses a "per-project" approach. This will not affect usage as project-level command have higher priority than global commands.
+> :bulb: This add-on moves to a per-project approach in v2.5.0+. You can safely delete the global `~/.ddev/commands/web/browsersync` once you’re on v2.5.0 or higher—this will not affect usage.
 
 When installing current versions, a warning is displayed if the global command (`~/.ddev/commands/web/browsersync`) is detected. You may safely delete his file.
 
