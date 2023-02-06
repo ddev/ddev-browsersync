@@ -43,7 +43,7 @@ EG.
 
 When installing current versions, a warning is displayed if the global command (`~/.ddev/commands/web/browsersync`) is detected. You may safely delete his file.
 
-If you run `ddev browsersync` from multiple local projects and receive a `Error: unknown command "browsersync" for "ddev"`, run the following command to add the command to the project as needed.
+If you run `ddev browsersync` from a local project and get `Error: unknown command "browsersync" for "ddev"`, run the following to add the command to the project:
 
   ```shell
   ddev get ddev/ddev-browsersync
