@@ -1,7 +1,7 @@
 name: ddev-browsersync
 
 pre_install_actions:
-- | 
+- |
   #ddev-nodisplay
   #ddev-description:Check for minimum DDEV requirement (v1.19.3)
   if ! ( ddev debug capabilities 2>/dev/null | grep multiple-dockerfiles >/dev/null 2>&1 ) ; then
@@ -12,11 +12,13 @@ project_files:
   - docker-compose.browsersync.yaml
   - web-build/Dockerfile.ddev-browsersync
   - browser-sync.js
-
-
-global_files:
   - commands/web/browsersync
 
 
 post_install_actions:
-
+- |
+  #ddev-nodisplay
+  #ddev-description:Check for global 'browser-sync.js'
+  if ( test -f "$HOME/.ddev/commands/web/browsersync" ) ; then
+    echo "Note: '~/.ddev/commands/web/browsersync' is no longer required and can be safely removed." && exit 0
+  fi

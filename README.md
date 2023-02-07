@@ -38,13 +38,24 @@ NOTE: The browsersync'd URL is ***HTTPS***, not HTTP. ddev-router redirects traf
 EG.
 "External: <http://d9.ddev.site:3000>" => Access on **<https://d9.ddev.site:3000>**
 
+
+> :bulb: This add-on moves to a per-project approach in v2.5.0+. You can safely delete the global `~/.ddev/commands/web/browsersync` once you’re on v2.5.0 or higher—this will not affect usage.
+
+
+If you run `ddev browsersync` from a local project and get `Error: unknown command "browsersync" for "ddev"`, run the following to add the command to the project:
+
+  ```shell
+  ddev get ddev/ddev-browsersync
+  ```
+
+
 ## What does this add-on do and add?
 
 1. Checks to make sure the DDEV version is adequate.
 2. Adds `.ddev/web-build/Dockerfile.ddev-browsersync`, which installs browsersync using npm.
 3. Adds a `browser-sync.js` to define the operation of the base setup.
 4. Adds a `.ddev/docker-compose.browsersync.yaml`, which exposes and routes the ports necessary.
-5. Adds a `ddev browsersync` shell command globally, which lets you easily start browsersync when you want it.
+5. Adds a `ddev browsersync` shell command, which lets you easily start browsersync when you want it.
 
 ## Other ways to use browsersync with this add-on
 
