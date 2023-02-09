@@ -5,7 +5,7 @@
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
 - [What does this add-on do?](#what-does-this-add-on-do)
-- [Other ways to use browsersync with this add-on](#other-ways-to-use-browsersync-with-this-add-on)
+- [Other ways to use Browsersync with this add-on](#other-ways-to-use-browsersync-with-this-add-on)
   - [Basic usage](#basic-usage)
   - [Problems](#problems)
   - [Laravel-mix configuration](#laravel-mix-configuration)
