@@ -25,6 +25,10 @@ teardown() {
   [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
 }
 
+healthcheck() {
+  ${CURLCMD} https://${PROJNAME}.ddev.site:3000 | grep "this is a test"
+}
+
 @test "install from directory" {
   set -eu -o pipefail
   cd ${TESTDIR}
@@ -33,7 +37,9 @@ teardown() {
   ddev restart >/dev/null
   ./run-ddev-browsersync &
   sleep 5
-  ${CURLCMD} https://${PROJNAME}.ddev.site:3000 | grep "this is a test"
+
+  # Check service works
+  healthcheck
 }
 
 @test "install from release" {
@@ -44,6 +50,7 @@ teardown() {
   ddev restart
   ./run-ddev-browsersync &
   sleep 5
-  # After https PR goes in, this should be changed to just https
-  (${CURLCMD} https://${PROJNAME}.ddev.site:3000 || ${CURLCMD} http://${PROJNAME}.ddev.site:3000) | grep "this is a test"
+
+  # Check service works
+  healthcheck
 }
