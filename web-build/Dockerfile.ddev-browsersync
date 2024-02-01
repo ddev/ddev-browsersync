@@ -1,2 +1,2 @@
 #ddev-generated
-RUN npm install -g browser-sync
+RUN npm install -g browser-sync http-proxy-middleware
