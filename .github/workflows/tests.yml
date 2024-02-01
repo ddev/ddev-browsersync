@@ -27,6 +27,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Environment setup
+      run: |
+        sudo apt-get update >/dev/null && sudo apt-get install -y expect >/dev/null
+
     - uses: ddev/github-action-add-on-test@v1
       with:
         ddev_version: ${{ matrix.ddev_version }}
