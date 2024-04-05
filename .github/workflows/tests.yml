@@ -17,6 +17,11 @@ env:
   # Allow ddev get to use a github token to prevent rate limiting by tests
   DDEV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+
+# Required permissions for keep-alive, used by ddev/github-action-add-on-test
+permissions:
+  actions: write
+
 jobs:
   tests:
     strategy:
@@ -31,7 +36,7 @@ jobs:
       run: |
         sudo apt-get update >/dev/null && sudo apt-get install -y expect >/dev/null
 
-    - uses: ddev/github-action-add-on-test@v1
+    - uses: ddev/github-action-add-on-test@v2
       with:
         ddev_version: ${{ matrix.ddev_version }}
         token: ${{ secrets.GITHUB_TOKEN }}
