@@ -48,6 +48,7 @@ If you run `ddev browsersync` from a local project and get `Error: unknown comma
   ddev get ddev/ddev-browsersync
   ```
 
+Once Browsersync is running, visit `https://<project>.ddev.site:3000` or run `ddev launch :3000` to launch the proxy URL in a web browser.
 
 ## What does this add-on do?
 
