@@ -9,7 +9,7 @@ pre_install_actions:
   fi
 
 project_files:
-  - docker-compose.browsersync.yaml
+  - config.browsersync.yaml
   - web-build/Dockerfile.ddev-browsersync
   - browser-sync.js
   - commands/web/browsersync
