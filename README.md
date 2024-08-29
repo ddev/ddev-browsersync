@@ -58,6 +58,10 @@ Once Browsersync is running, visit `https://<project>.ddev.site:3000` or run `dd
 4. Adds a `.ddev/docker-compose.browsersync.yaml`, which exposes and routes the ports necessary.
 5. Adds a `ddev browsersync` shell command, which lets you easily start Browsersync when you want it.
 
+For WordPress projects, this add-on also:
+* Adds a `wp-config-ddev-browser.php` file which modifies the WP_HOME and WP_SITEURL values to work with Browsersync.
+* On install, modifies the `wp-config-ddev.php` file to include the `wp-config-ddev-browser.php` file. 
+
 ## Other ways to use browsersync with this add-on
 
 There are many other options to integrate browsersync into your project, including:

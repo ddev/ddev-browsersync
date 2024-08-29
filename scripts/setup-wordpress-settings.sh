@@ -29,7 +29,7 @@ awk '
     next
 }
 {print}
-' wp-config-ddev.php > wp-config-ddev-temp.php
+' ${DDEV_APPROOT}/wp-config-ddev.php > ${DDEV_APPROOT}/wp-config-ddev-temp.php
 
 # Replace the real config file with the modified version in temporary file.
-mv wp-config-ddev-temp.php > wp-config-ddev.php
+mv ${DDEV_APPROOT}/wp-config-ddev-temp.php ${DDEV_APPROOT}/wp-config-ddev.php
