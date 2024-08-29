@@ -17,19 +17,26 @@ SETTINGS_FILE_NAME="${DDEV_APPROOT}/wp-config-ddev.php"
 
 echo "Settings file name: ${SETTINGS_FILE_NAME}"
 
-# Replace /** WP_HOME URL */ with our include
+# If wp-config.php already contains the require_once() then exit early.
+if grep -q "/\*\* Include for ddev-browsersync to modify WP_HOME and WP_SITEURL. \*/" ${DDEV_APPROOT}/wp-config.php; then
+   exit 0
+fi
+
+# Append our code before the ddev config comment.
 awk '
-/\/\*\* WP_HOME URL \*\// {
-    print "    /** Include WP_HOME and WP_SITEURL settings required for Browsersync. */"
-    print "    if ( ( file_exists( __DIR__ . '\''/wp-config-ddev-browsersync.php'\'' ) ) ) {"
-    print "        include __DIR__ . '\''/wp-config-ddev-browsersync.php'\'';"
-    print "    }"
+/\/\/ Include for ddev-managed settings in wp-config-ddev.php./ {
+    print "/** Include for ddev-browsersync to modify WP_HOME and WP_SITEURL. */"
+    print "$ddev_browsersync_settings = dirname( __FILE__ ) . \"/wp-config-ddev-browsersync.php\";"
     print ""
-    print "    /** WP_HOME URL */"
+    print "if ( is_readable( $ddev_browsersync_settings ) ) {"
+    print "    require_once( $ddev_browsersync_settings );"
+    print "}"
+    print ""
+    print "// Include for ddev-managed settings in wp-config-ddev.php."
     next
 }
 {print}
-' ${DDEV_APPROOT}/wp-config-ddev.php > ${DDEV_APPROOT}/wp-config-ddev-temp.php
+' ${DDEV_APPROOT}/wp-config.php > ${DDEV_APPROOT}/wp-config-temp.php
 
 # Replace the real config file with the modified version in temporary file.
-mv ${DDEV_APPROOT}/wp-config-ddev-temp.php ${DDEV_APPROOT}/wp-config-ddev.php
+mv ${DDEV_APPROOT}/wp-config-temp.php ${DDEV_APPROOT}/wp-config.php
