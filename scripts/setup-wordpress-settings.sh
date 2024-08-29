@@ -30,3 +30,5 @@ awk '
 }
 {print}
 ' wp-config-ddev.php > wp-config-ddev-temp.php
+
+mv wp-config-ddev-temp.php > wp-config-ddev.php
