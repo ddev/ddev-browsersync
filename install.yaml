@@ -13,7 +13,8 @@ project_files:
   - web-build/Dockerfile.ddev-browsersync
   - browser-sync.js
   - commands/web/browsersync
-
+  - scripts/wp-config-ddev-browsersync.php
+  - scripts/setup-wordpress-settings.sh
 
 post_install_actions:
 - |
@@ -22,7 +23,7 @@ post_install_actions:
   if ( test -f "$HOME/.ddev/commands/web/browsersync" ) ; then
     echo "Note: '~/.ddev/commands/web/browsersync' is no longer required and can be safely removed." && exit 0
   fi
-  #ddev-description:Install redis settings for WordPress if applicable
+  #ddev-description:Install browsersync settings for WordPress if applicable
   scripts/setup-wordpress-settings.sh
 
 removal_actions:
