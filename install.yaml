@@ -24,4 +24,4 @@ post_install_actions:
   fi
   #ddev-nodisplay
   #ddev-description:Remove old 'docker-compose.browsersync.yaml'
-  if grep "#ddev-generated" $DDEV_APPROOT/.ddev/docker-compose.browsersync.yaml 2>/dev/null; then rm "$DDEV_APPROOT/.ddev/docker-compose.browsersync.yaml"; fi
+  if grep "#ddev-generated" $DDEV_APPROOT/.ddev/docker-compose.browsersync.yaml 2>/dev/null; then rm -f "$DDEV_APPROOT/.ddev/docker-compose.browsersync.yaml"; fi
