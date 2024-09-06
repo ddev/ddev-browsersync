@@ -14,6 +14,7 @@ project_files:
   - browser-sync.js
   - commands/web/browsersync
   - scripts/wp-config-ddev-browsersync.php
+  - scripts/remove-wordpress-settings.sh
   - scripts/setup-wordpress-settings.sh
 
 post_install_actions:
@@ -34,3 +35,4 @@ removal_actions:
   #ddev-nodisplay
   #ddev-description:Remove browsersync settings for WordPress if applicable
   rm -f "${DDEV_APPROOT}/wp-config-ddev-browsersync.php"
+  scripts/remove-wordpress-settings.sh

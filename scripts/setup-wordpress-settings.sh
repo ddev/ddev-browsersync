@@ -13,7 +13,7 @@ fi
 
 cp scripts/wp-config-ddev-browsersync.php $DDEV_APPROOT/
 
-SETTINGS_FILE_NAME="${DDEV_APPROOT}/wp-config-ddev.php"
+SETTINGS_FILE_NAME="${DDEV_APPROOT}/wp-config.php"
 
 echo "Settings file name: ${SETTINGS_FILE_NAME}"
 
@@ -21,6 +21,8 @@ echo "Settings file name: ${SETTINGS_FILE_NAME}"
 if grep -q "/\*\* Include for ddev-browsersync to modify WP_HOME and WP_SITEURL. \*/" ${DDEV_APPROOT}/wp-config.php; then
    exit 0
 fi
+
+echo "Adding wp-config-ddev-browsersync.php to: ${SETTINGS_FILE_NAME}"
 
 # Append our code before the ddev config comment.
 awk '
