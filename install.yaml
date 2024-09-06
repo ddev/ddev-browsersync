@@ -33,4 +33,4 @@ removal_actions:
 - |
   #ddev-nodisplay
   #ddev-description:Remove browsersync settings for WordPress if applicable
-  rm -f "${DDEV_APPROOT}/wp-config-ddev-browsersync.php
+  rm -f "${DDEV_APPROOT}/wp-config-ddev-browsersync.php"
