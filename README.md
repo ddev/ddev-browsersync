@@ -58,6 +58,10 @@ Once Browsersync is running, visit `https://<project>.ddev.site:3000` or run `dd
 4. Adds a `.ddev/docker-compose.browsersync.yaml`, which exposes and routes the ports necessary.
 5. Adds a `ddev browsersync` shell command, which lets you easily start Browsersync when you want it.
 
+For WordPress projects, this add-on also:
+* Adds a `wp-config-ddev-browser.php` file which modifies the WP_HOME and WP_SITEURL values to work with Browsersync.
+* On install, modifies the `wp-config-ddev.php` file to include the `wp-config-ddev-browser.php` file. 
+
 ## Other ways to use browsersync with this add-on
 
 There are many other options to integrate browsersync into your project, including:
@@ -128,3 +132,34 @@ ddev exec npm run watch
 - Browsersync will be running on **HTTPS** at `https://browsersync-demo.ddev.site:3000`
 
 **Contributed and maintained by [tyler36](https://github.com/tyler36)**
+
+### WordPress Configuration Changes.
+
+The changes this add-on makes to the `wp-config-ddev.php` file during installation can be seen below.
+
+The `wp-config-ddev-browserync.php` file is included before the `/** WP_HOME URL */` comment.
+
+Before:
+
+```php
+/** WP_HOME URL */
+defined( 'WP_HOME' ) || define( 'WP_HOME', 'https://projectname.ddev.site' );
+
+/** WP_SITEURL location */
+defined( 'WP_SITEURL' ) || define( 'WP_SITEURL', WP_HOME . '/' );
+```
+
+After:
+
+```php
+/** Include WP_HOME and WP_SITEURL settings required for Browsersync. */
+if ( ( file_exists( __DIR__ . '/wp-config-ddev-browsersync.php' ) ) ) {
+    include __DIR__ . '/wp-config-ddev-browsersync.php';
+}
+
+/** WP_HOME URL */
+defined( 'WP_HOME' ) || define( 'WP_HOME', 'https://projectname.ddev.site' );
+
+/** WP_SITEURL location */
+defined( 'WP_SITEURL' ) || define( 'WP_SITEURL', WP_HOME . '/' );
+```

@@ -13,7 +13,9 @@ project_files:
   - web-build/Dockerfile.ddev-browsersync
   - browser-sync.js
   - commands/web/browsersync
-
+  - scripts/wp-config-ddev-browsersync.php
+  - scripts/remove-wordpress-settings.sh
+  - scripts/setup-wordpress-settings.sh
 
 post_install_actions:
 - |
@@ -25,3 +27,12 @@ post_install_actions:
   #ddev-nodisplay
   #ddev-description:Remove old 'docker-compose.browsersync.yaml'
   if grep "#ddev-generated" $DDEV_APPROOT/.ddev/docker-compose.browsersync.yaml 2>/dev/null; then rm -f "$DDEV_APPROOT/.ddev/docker-compose.browsersync.yaml"; fi
+  #ddev-description:Install browsersync settings for WordPress if applicable
+  scripts/setup-wordpress-settings.sh
+
+removal_actions:
+- |
+  #ddev-nodisplay
+  #ddev-description:Remove browsersync settings for WordPress if applicable
+  rm -f "${DDEV_APPROOT}/wp-config-ddev-browsersync.php"
+  scripts/remove-wordpress-settings.sh
