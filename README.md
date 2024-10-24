@@ -25,7 +25,11 @@ This add-on allows you to run [Browsersync](https://browsersync.io/) through the
 - Install the DDEV Browsersync add-on:
 
 ```shell
+# For DDEV v1.23.5 or above run
+ddev add-on get ddev/ddev-browsersync
+# For earlier versions of DDEV run
 ddev get ddev/ddev-browsersync
+# Then for all versions:
 ddev restart
 ddev browsersync
 ```
@@ -44,9 +48,17 @@ EG.
 
 If you run `ddev browsersync` from a local project and get `Error: unknown command "browsersync" for "ddev"`, run the following to add the command to the project:
 
-  ```shell
-  ddev get ddev/ddev-browsersync
-  ```
+For DDEV v1.23.5 or above run
+
+```sh
+ddev add-on get ddev/ddev-browsersync
+```
+
+For earlier versions of DDEV run
+
+```sh
+ddev get ddev/ddev-browsersync
+```
 
 Once Browsersync is running, visit `https://<project>.ddev.site:3000` or run `ddev launch :3000` to launch the proxy URL in a web browser.
 
