@@ -4,6 +4,7 @@
 
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
+  - [Auto-start the watcher server](#auto-start-the-watcher-server)
 - [What does this add-on do?](#what-does-this-add-on-do)
 - [Integrations](#integrations)
   - [Laravel Mix Configuration](#laravel-mix-configuration)
@@ -57,6 +58,25 @@ ddev launch :3000
 ```
 
 The site should briefly display "Browsersync: connect" in the top right corner, confirming it is connect to the server.
+
+### Auto-start the watcher server
+
+You can use DDEV's `post-start` hook to start the watcher server and launch the page when DDEV starts.
+
+1. Create a `.ddev/config.browsersync-extras.yaml`
+
+```yml
+hooks:
+  post-start:
+    - exec-host: bash -c "ddev browsersync &"
+    - exec-host: ddev launch :3000
+```
+
+1. Restart DDEV to apply the changes.
+
+```shell
+ddev restart
+```
 
 ## What does this add-on do?
 
