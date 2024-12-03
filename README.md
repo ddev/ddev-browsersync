@@ -8,7 +8,7 @@
 - [Other ways to use Browsersync with this add-on](#other-ways-to-use-browsersync-with-this-add-on)
   - [Basic usage](#basic-usage)
   - [Problems](#problems)
-  - [Laravel-mix configuration](#laravel-mix-configuration)
+  - [WordPress Configuration Changes](#wordpress-configuration-changes)
 
 ## Introduction
 
@@ -74,9 +74,9 @@ For WordPress projects, this add-on also:
 * Adds a `wp-config-ddev-browser.php` file which modifies the WP_HOME and WP_SITEURL values to work with Browsersync.
 * On install, modifies the `wp-config-ddev.php` file to include the `wp-config-ddev-browser.php` file. 
 
-## Other ways to use Browsersync with this add-on
+## Other ways to use browsersync with this add-on
 
-There are many other options to integrate Browsersync into your project, including:
+There are many other options to integrate browsersync into your project, including:
 
 - [Grunt](https://browsersync.io/docs/grunt)
 - [Laravel Mix](https://laravel-mix.com/docs/4.0/browsersync)
@@ -145,7 +145,7 @@ ddev exec npm run watch
 
 **Contributed and maintained by [tyler36](https://github.com/tyler36)**
 
-### WordPress Configuration Changes.
+### WordPress Configuration Changes
 
 The changes this add-on makes to the `wp-config-ddev.php` file during installation can be seen below.
 
