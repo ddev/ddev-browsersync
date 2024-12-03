@@ -74,9 +74,9 @@ For WordPress projects, this add-on also:
 * Adds a `wp-config-ddev-browser.php` file which modifies the WP_HOME and WP_SITEURL values to work with Browsersync.
 * On install, modifies the `wp-config-ddev.php` file to include the `wp-config-ddev-browser.php` file. 
 
-## Other ways to use browsersync with this add-on
+## Other ways to use Browsersync with this add-on
 
-There are many other options to integrate browsersync into your project, including:
+There are many other options to integrate Browsersync into your project, including:
 
 - [Grunt](https://browsersync.io/docs/grunt)
 - [Laravel Mix](https://laravel-mix.com/docs/4.0/browsersync)
