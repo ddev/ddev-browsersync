@@ -22,29 +22,7 @@ This add-on allows you to run [Browsersync](https://browsersync.io/) through the
 
 ## Getting Started
 
-- Install the DDEV Browsersync add-on:
-
-```shell
-# For DDEV v1.23.5 or above run
-ddev add-on get ddev/ddev-browsersync
-# For earlier versions of DDEV run
-ddev get ddev/ddev-browsersync
-# Then for all versions:
-ddev restart
-ddev browsersync
-```
-
-The new `ddev browsersync` global command runs Browsersync inside the web container and provides a
-link to the Browsersync proxy URL, something like `https://<project>.ddev.site:3000`.
-
-The Browsersync’d URL is ***HTTPS***, not HTTP. ddev-router redirects traffic to HTTPS, but Browsersync does not know this.
-
-EG.
-"External: <http://d9.ddev.site:3000>" => Access on **<https://d9.ddev.site:3000>**
-
-> :bulb: This add-on moves to a per-project approach in v2.5.0+. You can safely delete the global `~/.ddev/commands/web/browsersync` once you’re on v2.5.0 or higher—this will not affect usage.
-
-If you run `ddev browsersync` from a local project and get `Error: unknown command "browsersync" for "ddev"`, run the following to add the command to the project:
+1. Install the DDEV Browsersync add-on:
 
 For DDEV v1.23.5 or above run
 
@@ -58,7 +36,22 @@ For earlier versions of DDEV run
 ddev get ddev/ddev-browsersync
 ```
 
-Once Browsersync is running, visit `https://<project>.ddev.site:3000` or run `ddev launch :3000` to launch the proxy URL in a web browser.
+1. Use the custom command, `ddev browsersync`, to start the watcher
+
+```shell
+$ ddev browsersync
+Proxying browsersync on https://mysite.ddev.site:3000
+[Browsersync] Proxying: http://localhost
+[Browsersync] Watching files...
+```
+
+1. Launch the Browsersync page, via the `Proxying browsersync` URL shown in your terminal or `ddev launch :3000`
+
+```shell
+ddev launch :3000
+```
+
+The site should briefly display "Browsersync: connect" in the top right corner, confirming it is connect to the server.
 
 ## What does this add-on do?
 
