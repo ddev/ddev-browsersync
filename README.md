@@ -42,9 +42,7 @@ The Browsersync’d URL is ***HTTPS***, not HTTP. ddev-router redirects traffic 
 EG.
 "External: <http://d9.ddev.site:3000>" => Access on **<https://d9.ddev.site:3000>**
 
-
 > :bulb: This add-on moves to a per-project approach in v2.5.0+. You can safely delete the global `~/.ddev/commands/web/browsersync` once you’re on v2.5.0 or higher—this will not affect usage.
-
 
 If you run `ddev browsersync` from a local project and get `Error: unknown command "browsersync" for "ddev"`, run the following to add the command to the project:
 
@@ -71,9 +69,8 @@ Once Browsersync is running, visit `https://<project>.ddev.site:3000` or run `dd
 5. Adds a `ddev browsersync` shell command, which lets you easily start Browsersync when you want it.
 
 For WordPress projects, this add-on also:
-
-- Adds a `wp-config-ddev-browser.php` file which modifies the WP_HOME and WP_SITEURL values to work with Browsersync.
-- On install, modifies the `wp-config-ddev.php` file to include the `wp-config-ddev-browser.php` file.
+* Adds a `wp-config-ddev-browser.php` file which modifies the WP_HOME and WP_SITEURL values to work with Browsersync.
+* On install, modifies the `wp-config-ddev.php` file to include the `wp-config-ddev-browser.php` file. 
 
 ## Other ways to use browsersync with this add-on
 
