@@ -30,8 +30,6 @@ This add-on allows you to run [Browsersync](https://browsersync.io/) through the
 
 1. Install the DDEV Browsersync add-on:
 
-For DDEV v1.23.5 or above run
-
 ```sh
 ddev add-on get ddev/ddev-browsersync
 ```
