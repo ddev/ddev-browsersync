@@ -4,11 +4,17 @@
 
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
+  - [Auto-start the watcher server](#auto-start-the-watcher-server)
 - [What does this add-on do?](#what-does-this-add-on-do)
-- [Other ways to use Browsersync with this add-on](#other-ways-to-use-browsersync-with-this-add-on)
-  - [Basic usage](#basic-usage)
-  - [Problems](#problems)
-  - [Laravel-mix configuration](#laravel-mix-configuration)
+- [Integrations](#integrations)
+  - [Laravel Mix Configuration](#laravel-mix-configuration)
+  - [WordPress Configuration Changes](#wordpress-configuration-changes)
+  - [Others](#others)
+- [Troubleshooting](#troubleshooting)
+  - [No Gateway / 502 error](#no-gateway--502-error)
+  - [Unknown command "browsersync" for "ddev"](#unknown-command-browsersync-for-ddev)
+  - [System limit for number of file watchers reached](#system-limit-for-number-of-file-watchers-reached)
+- [Contributing](#contributing)
 
 ## Introduction
 
@@ -22,33 +28,7 @@ This add-on allows you to run [Browsersync](https://browsersync.io/) through the
 
 ## Getting Started
 
-- Install the DDEV Browsersync add-on:
-
-```shell
-# For DDEV v1.23.5 or above run
-ddev add-on get ddev/ddev-browsersync
-# For earlier versions of DDEV run
-ddev get ddev/ddev-browsersync
-# Then for all versions:
-ddev restart
-ddev browsersync
-```
-
-The new `ddev browsersync` global command runs Browsersync inside the web container and provides a
-link to the Browsersync proxy URL, something like `https://<project>.ddev.site:3000`.
-
-The Browsersync’d URL is ***HTTPS***, not HTTP. ddev-router redirects traffic to HTTPS, but Browsersync does not know this.
-
-EG.
-"External: <http://d9.ddev.site:3000>" => Access on **<https://d9.ddev.site:3000>**
-
-
-> :bulb: This add-on moves to a per-project approach in v2.5.0+. You can safely delete the global `~/.ddev/commands/web/browsersync` once you’re on v2.5.0 or higher—this will not affect usage.
-
-
-If you run `ddev browsersync` from a local project and get `Error: unknown command "browsersync" for "ddev"`, run the following to add the command to the project:
-
-For DDEV v1.23.5 or above run
+1. Install the DDEV Browsersync add-on:
 
 ```sh
 ddev add-on get ddev/ddev-browsersync
@@ -60,7 +40,41 @@ For earlier versions of DDEV run
 ddev get ddev/ddev-browsersync
 ```
 
-Once Browsersync is running, visit `https://<project>.ddev.site:3000` or run `ddev launch :3000` to launch the proxy URL in a web browser.
+1. Use the custom command, `ddev browsersync`, to start the watcher
+
+```shell
+$ ddev browsersync
+Proxying browsersync on https://mysite.ddev.site:3000
+[Browsersync] Proxying: http://localhost
+[Browsersync] Watching files...
+```
+
+1. Launch the Browsersync page, via the `Proxying browsersync` URL shown in your terminal or `ddev launch :3000`
+
+```shell
+ddev launch :3000
+```
+
+The site should briefly display "Browsersync: connect" in the top right corner, confirming it is connect to the server.
+
+### Auto-start the watcher server
+
+You can use DDEV's `post-start` hook to start the watcher server and launch the page when DDEV starts.
+
+1. Create a `.ddev/config.browsersync-extras.yaml`
+
+```yml
+hooks:
+  post-start:
+    - exec-host: bash -c "ddev browsersync &"
+    - exec-host: ddev launch :3000
+```
+
+1. Restart DDEV to apply the changes.
+
+```shell
+ddev restart
+```
 
 ## What does this add-on do?
 
@@ -71,40 +85,15 @@ Once Browsersync is running, visit `https://<project>.ddev.site:3000` or run `dd
 5. Adds a `ddev browsersync` shell command, which lets you easily start Browsersync when you want it.
 
 For WordPress projects, this add-on also:
-* Adds a `wp-config-ddev-browser.php` file which modifies the WP_HOME and WP_SITEURL values to work with Browsersync.
-* On install, modifies the `wp-config-ddev.php` file to include the `wp-config-ddev-browser.php` file. 
 
-## Other ways to use browsersync with this add-on
+- Adds a `wp-config-ddev-browser.php` file which modifies the WP_HOME and WP_SITEURL values to work with Browsersync.
+- On install, modifies the `wp-config-ddev.php` file to include the `wp-config-ddev-browser.php` file.
 
-There are many other options to integrate browsersync into your project, including:
+## Integrations
 
-- [Grunt](https://browsersync.io/docs/grunt)
-- [Laravel Mix](https://laravel-mix.com/docs/4.0/browsersync)
-
-Please see [Browsersync documentation](https://browsersync.io/docs) for more details.
-PRs for install steps for specific frameworks are welcome.
-
-### Basic usage
-
-The existing example with just `ddev browsersync` should work out of the box.
-There is no need for additional configuration, but you may want to edit
-the `.ddev/browser-sync.js` file to specify exactly what files and directories
-should be watched. If you watch less things it’s easier on your computer.
-
-### Problems
-
-- If you get `Error: ENOSPC: System limit for number of file watchers reached, watch '/var/www/html/web/core/themes/classy/images/icons/video-x-generic.png'` it means you either have to increase the file watcher limit or decrease the number of files you’re watching.
-  - To decrease the number of files you’re watching, edit the `ignore` section in `browser-sync.js` (or another config file if you have a more complex setup).
-  - On Colima, run `colima ssh` and `sudo sysctl fs.inotify.max_user_watches` to see how many watches you have. To increase it, use something like `sudo sysctl -w fs.inotify.max_user_watches=2048576`. Unfortunately, this has to be done on every Colima restart.
-  - On Docker Desktop for Mac, `docker run -it --privileged --pid=host justincormack/nsenter1` and `sysctl -w fs.inotify.max_user_watches=1048576`. Unfortunately, this has to be done again on every Docker restart.
-  - On Docker Desktop for Windows, add or edit `~/.wslconfig` with these contents:
-
-    ```config
-    [wsl2]
-    kernelCommandLine = "fs.inotify.max_user_watches=1048576"
-    ```
-
-  - On Linux, you can change `fs.inotify.max_user_watches` on the host in `/etc/sysctl.d/local.conf` or elsewhere.
+`ddev-browsersync` works out of the box for many project types.
+However, you may want to edit the `.ddev/browser-sync.js` file to specify exactly what files and directories
+should be watched. Limiting watched files may reduce hard disk and CPU loads.
 
 ### Laravel Mix Configuration
 
@@ -143,9 +132,7 @@ ddev exec npm run watch
 
 - Browsersync will be running on **HTTPS** at `https://browsersync-demo.ddev.site:3000`
 
-**Contributed and maintained by [tyler36](https://github.com/tyler36)**
-
-### WordPress Configuration Changes.
+### WordPress Configuration Changes
 
 The changes this add-on makes to the `wp-config-ddev.php` file during installation can be seen below.
 
@@ -175,3 +162,50 @@ defined( 'WP_HOME' ) || define( 'WP_HOME', 'https://projectname.ddev.site' );
 /** WP_SITEURL location */
 defined( 'WP_SITEURL' ) || define( 'WP_SITEURL', WP_HOME . '/' );
 ```
+
+### Others
+
+There are many other options to integrate Browsersync into your project, including:
+
+- [Grunt](https://browsersync.io/docs/grunt)
+- [Laravel Mix](https://laravel-mix.com/docs/4.0/browsersync)
+
+Please see [Browsersync documentation](https://browsersync.io/docs) for more details.
+
+## Troubleshooting
+
+### No Gateway / 502 error
+
+This error usually occurs when the watcher server is not running.
+Run `ddev browsersync` to start the server.
+
+### Unknown command "browsersync" for "ddev"
+
+> :bulb: This add-on moves to a per-project command approach in v2.5.0+. You can safely delete the global `~/.ddev/commands/web/browsersync` once you’re on v2.5.0 or higher.
+
+If you run `ddev browsersync` from a local project and get `Error: unknown command "browsersync" for "ddev"`, please reinstall the add-on.
+
+### System limit for number of file watchers reached
+
+This error means the watcher is unable to track all the files it is tasked with watching.
+You either have to decrease the number of files you’re watching or increase the file watcher limit.
+
+- Decrease the number of files you're watching by updating `browser-sync.js`:
+  - Limit the number of files being watch by updating `files: [...]` section
+  - Increase the number of ignored files by updating  the `ignore: []` section
+- If you use Colima, run `colima ssh` and `sudo sysctl fs.inotify.max_user_watches` to see how many watches you have. To increase it, use something like `sudo sysctl -w fs.inotify.max_user_watches=2048576`. Unfortunately, this has to be done on every Colima restart.
+- If you use Docker Desktop for Mac, `docker run -it --privileged --pid=host justincormack/nsenter1` and `sysctl -w fs.inotify.max_user_watches=1048576`. Unfortunately, this has to be done again on every Docker restart.
+- On Docker Desktop for Windows, add or edit `~/.wslconfig` with these contents:
+
+    ```conf
+    [wsl2]
+    kernelCommandLine = "fs.inotify.max_user_watches=1048576"
+    ```
+
+- On Linux, you can change `fs.inotify.max_user_watches` on the host in `/etc/sysctl.d/local.conf` or elsewhere.
+
+## Contributing
+
+PRs for install steps for specific frameworks are welcome.
+
+**Contributed and maintained by [tyler36](https://github.com/tyler36)**
