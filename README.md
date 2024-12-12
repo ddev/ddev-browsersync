@@ -179,6 +179,10 @@ Please see [Browsersync documentation](https://browsersync.io/docs) for more det
 This error usually occurs when the watcher server is not running.
 Run `ddev browsersync` to start the server.
 
+### Typo3 No site configuration found / 404 Error
+
+Solution: base url in config.yaml should be always http even if the frontend run over https
+
 ### Unknown command "browsersync" for "ddev"
 
 > :bulb: This add-on moves to a per-project command approach in v2.5.0+. You can safely delete the global `~/.ddev/commands/web/browsersync` once you’re on v2.5.0 or higher.
