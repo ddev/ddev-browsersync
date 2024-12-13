@@ -181,7 +181,7 @@ Run `ddev browsersync` to start the server.
 
 ### Typo3 No site configuration found / 404 Error
 
-Solution: base url in config.yaml should be always http even if the frontend run over https
+Solution: The base URL (`base` in the TYPO3 site's `config.yaml` (like `config/sites/main/config.yaml` should specify `http` even though the frontend is configured for `https`. This can also be solved by commenting out the default `base` line.
 ```yaml
 base: http://examplehost.ddev.site/
 ```
