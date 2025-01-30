@@ -3,7 +3,7 @@
 /** Allow any domain/port so WordPress allows browsersync's :3000 URLs */
 if ( ! empty( $_SERVER['SERVER_PORT'] ) && ! empty( $_SERVER['SERVER_NAME'] ) ) {
 	// phpcs:ignore
-	$domain = sprintf( '%s://%s', $_SERVER['SERVER_PORT'] == 80 ? 'http' : 'https', $_SERVER['SERVER_NAME'] );
+	$domain = sprintf( '%s://%s', $_SERVER['SERVER_PORT'] == 80 ? 'http' : 'https', $_SERVER['DDEV_HOSTNAME'] );
 
 	/** WP_HOME URL */
 	define( 'WP_HOME', $domain );
