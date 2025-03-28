@@ -60,3 +60,21 @@ healthcheck() {
   # Check service works
   healthcheck
 }
+
+@test "ES module environment" {
+  set -eu -o pipefail
+  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
+
+  # Setup NPM environment
+  cp "${DIR}/tests/package.json" "${TESTDIR}"
+
+  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev addon get ${DIR}
+
+  ddev restart
+  ./run-ddev-browsersync &
+  sleep 5
+
+  # Check service works
+  healthcheck
+}
