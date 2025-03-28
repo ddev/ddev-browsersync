@@ -38,8 +38,8 @@ healthcheck() {
 @test "install from directory" {
   set -eu -o pipefail
   cd ${TESTDIR}
-  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ${DIR}
+  echo "# ddev addon get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev addon get ${DIR}
   ddev restart
   ./run-ddev-browsersync &
   sleep 5
@@ -51,8 +51,8 @@ healthcheck() {
 @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev get ddev/ddev-browsersync with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev get ddev/ddev-browsersync
+  echo "# ddev addon get ddev/ddev-browsersync with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev addon get ddev/ddev-browsersync
   ddev restart
   ./run-ddev-browsersync &
   sleep 5
