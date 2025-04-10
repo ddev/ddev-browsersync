@@ -1,9 +1,12 @@
-# ddev-browsersync <!-- omit in toc -->
+[![tests](https://github.com/ddev/ddev-browsersync/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ddev/ddev-browsersync/actions/workflows/tests.yml?query=branch%3Amain)
+[![last commit](https://img.shields.io/github/last-commit/ddev/ddev-browsersync)](https://github.com/ddev/ddev-browsersync/commits)
+[![release](https://img.shields.io/github/v/release/ddev/ddev-browsersync)](https://github.com/ddev/ddev-browsersync/releases/latest)
 
-[![tests](https://github.com/ddev/ddev-browsersync/actions/workflows/tests.yml/badge.svg)](https://github.com/ddev/ddev-browsersync/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2026.svg)
+# DDEV Browsersync <!-- omit in toc -->
 
-- [Introduction](#introduction)
-- [Getting Started](#getting-started)
+- [Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
   - [Auto-start the watcher server](#auto-start-the-watcher-server)
 - [What does this add-on do?](#what-does-this-add-on-do)
 - [Integrations](#integrations)
@@ -14,9 +17,9 @@
   - [No Gateway / 502 error](#no-gateway--502-error)
   - [Unknown command "browsersync" for "ddev"](#unknown-command-browsersync-for-ddev)
   - [System limit for number of file watchers reached](#system-limit-for-number-of-file-watchers-reached)
-- [Contributing](#contributing)
+- [Credits](#credits)
 
-## Introduction
+## Overview
 
 [Browsersync](https://browsersync.io/) is free software that features:
 
@@ -26,53 +29,49 @@
 
 This add-on allows you to run [Browsersync](https://browsersync.io/) through the DDEV web service.
 
-## Getting Started
+## Installation
 
-1. Install the DDEV Browsersync add-on:
+To install this add-on, run:
 
-```sh
+```bash
 ddev add-on get ddev/ddev-browsersync
+ddev restart
 ```
 
-For earlier versions of DDEV run
+After installation, make sure to commit the `.ddev` directory to version control.
 
-```sh
-ddev get ddev/ddev-browsersync
-```
+## Usage
 
-1. Use the custom command, `ddev browsersync`, to start the watcher
+| Command | Description |
+| ------- | ----------- |
+| `ddev browsersync` | Start the watcher |
+| `ddev launch :3000` | Launch the Browsersync page |
 
-```shell
+Examples:
+
+```bash
 $ ddev browsersync
-Proxying browsersync on https://mysite.ddev.site:3000
+Proxying Browsersync on https://mysite.ddev.site:3000
 [Browsersync] Proxying: http://localhost
 [Browsersync] Watching files...
+
+$ ddev launch :3000
+# The site should briefly display "Browsersync: connect"
+# in the top right corner, confirming it is connect to the server.
 ```
-
-1. Launch the Browsersync page, via the `Proxying browsersync` URL shown in your terminal or `ddev launch :3000`
-
-```shell
-ddev launch :3000
-```
-
-The site should briefly display "Browsersync: connect" in the top right corner, confirming it is connect to the server.
 
 ### Auto-start the watcher server
 
 You can use DDEV's `post-start` hook to start the watcher server and launch the page when DDEV starts.
 
-1. Create a `.ddev/config.browsersync-extras.yaml`
-
-```yml
+```bash
+cat <<'EOF' > .ddev/config.browsersync-extras.yaml
 hooks:
-  post-start:
-    - exec-host: bash -c "ddev browsersync &"
-    - exec-host: ddev launch :3000
-```
+    post-start:
+        - exec-host: bash -c "ddev browsersync &"
+        - exec-host: ddev launch :3000
+EOF
 
-1. Restart DDEV to apply the changes.
-
-```shell
 ddev restart
 ```
 
@@ -211,8 +210,8 @@ You either have to decrease the number of files you’re watching or increase th
 
 - On Linux, you can change `fs.inotify.max_user_watches` on the host in `/etc/sysctl.d/local.conf` or elsewhere.
 
-## Contributing
+## Credits
 
 PRs for install steps for specific frameworks are welcome.
 
-**Contributed and maintained by [tyler36](https://github.com/tyler36)**
+**Contributed and maintained by [@tyler36](https://github.com/tyler36)**
