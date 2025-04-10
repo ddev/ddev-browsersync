@@ -1,64 +1,90 @@
+#!/usr/bin/env bats
+
+# Bats is a testing framework for Bash
+# Documentation https://bats-core.readthedocs.io/en/stable/
+# Bats libraries documentation https://github.com/ztombol/bats-docs
+
+# For local tests, install bats-core, bats-assert, bats-file, bats-support
+# And run this in the add-on root directory:
+#   bats ./tests/test.bats
+# To exclude release tests:
+#   bats ./tests/test.bats --filter-tags '!release'
+# For debugging:
+#   bats ./tests/test.bats --show-output-of-passing-tests --verbose-run --print-output-on-failure
+
 setup() {
   set -eu -o pipefail
 
-  # Fail early if old ddev is installed
-  ddev debug capabilities | grep multiple-dockerfiles >/dev/null || exit 3
+  # Override this variable for your add-on:
+  export GITHUB_REPO=ddev/ddev-browsersync
 
-  export DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )/.."
-  export TESTDIR=~/tmp/test-browsersync
-  mkdir -p "${TESTDIR}"
-  export PROJNAME=test-browsersync
-  export DDEV_NON_INTERACTIVE=true
-  ddev delete -Oy ${PROJNAME} >/dev/null || true
+  TEST_BREW_PREFIX="$(brew --prefix 2>/dev/null || true)"
+  export BATS_LIB_PATH="${BATS_LIB_PATH}:${TEST_BREW_PREFIX}/lib:/usr/lib/bats"
+  bats_load_library bats-assert
+  bats_load_library bats-file
+  bats_load_library bats-support
+
+  export DIR="$(cd "$(dirname "${BATS_TEST_FILENAME}")/.." >/dev/null 2>&1 && pwd)"
+  export PROJNAME="test-$(basename "${GITHUB_REPO}")"
+  mkdir -p ~/tmp
+  export TESTDIR=$(mktemp -d ~/tmp/${PROJNAME}.XXXXXX)
+  export DDEV_NONINTERACTIVE=true
+  export DDEV_NO_INSTRUMENTATION=true
+  ddev delete -Oy "${PROJNAME}" >/dev/null 2>&1 || true
+
+  # Copy script
   cp tests/run-ddev-browsersync "${TESTDIR}"
+
   cd "${TESTDIR}"
-  ddev config --project-name=${PROJNAME}
+  run ddev config --project-name="${PROJNAME}" --project-tld=ddev.site
+  assert_success
 
   # Add simple page to test against.
   echo "<html><head></head><body>this is a test</body>" >index.html
 
-  ddev start -y
+  run ddev start -y
+  assert_success
+}
 
-  CURLCMD="curl -s --fail"
-  # I can't currently get curl to trust mkcert CA on macOS
-  if [[ "$OSTYPE" == "darwin"* ]]; then CURLCMD="curl -s -k --fail"; fi
+health_checks() {
+  run curl -sfI https://${PROJNAME}.ddev.site:3000
+  assert_success
+  assert_output --partial "HTTP/2 200"
+
+  run curl -sf https://${PROJNAME}.ddev.site:3000
+  assert_success
+  assert_output --partial "this is a test"
 }
 
 teardown() {
   set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  ddev delete -Oy ${PROJNAME}
+  ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
   [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
-}
-
-healthcheck() {
-  ${CURLCMD} https://${PROJNAME}.ddev.site:3000 | grep "this is a test"
 }
 
 @test "install from directory" {
   set -eu -o pipefail
-  cd ${TESTDIR}
-  echo "# ddev addon get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev addon get ${DIR}
-  ddev restart
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
+  run ddev restart -y
+  assert_success
   ./run-ddev-browsersync &
   sleep 5
-
-  # Check service works
-  healthcheck
+  health_checks
 }
 
+# bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev addon get ddev/ddev-browsersync with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev addon get ddev/ddev-browsersync
-  ddev restart
+  echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${GITHUB_REPO}"
+  assert_success
+  run ddev restart -y
+  assert_success
   ./run-ddev-browsersync &
   sleep 5
-
-  # Check service works
-  healthcheck
+  health_checks
 }
 
 @test "ES module environment" {
