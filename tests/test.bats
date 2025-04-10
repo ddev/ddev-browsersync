@@ -64,43 +64,52 @@ teardown() {
 
 @test "install from directory" {
   set -eu -o pipefail
+
   echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${DIR}"
   assert_success
+
   run ddev restart -y
   assert_success
+
   ./run-ddev-browsersync &
   sleep 5
+
   health_checks
 }
 
 # bats test_tags=release
 @test "install from release" {
   set -eu -o pipefail
+
   echo "# ddev add-on get ${GITHUB_REPO} with project ${PROJNAME} in $(pwd)" >&3
   run ddev add-on get "${GITHUB_REPO}"
   assert_success
+
   run ddev restart -y
   assert_success
+
   ./run-ddev-browsersync &
   sleep 5
+
   health_checks
 }
 
 @test "ES module environment" {
   set -eu -o pipefail
-  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
 
   # Setup NPM environment
   cp "${DIR}/tests/package.json" "${TESTDIR}"
 
-  echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev addon get ${DIR}
+  echo "# ddev add-on get ${DIR} with project ${PROJNAME} in $(pwd)" >&3
+  run ddev add-on get "${DIR}"
+  assert_success
 
-  ddev restart
+  run ddev restart -y
+  assert_success
+
   ./run-ddev-browsersync &
   sleep 5
 
-  # Check service works
-  healthcheck
+  health_checks
 }
