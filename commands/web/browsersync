@@ -6,5 +6,5 @@
 ## Example: "ddev browsersync"
 ## ExecRaw: true
 
-echo "Proxying browsersync on ${DDEV_PRIMARY_URL}:3000"
+echo "Proxying Browsersync on $(echo ${DDEV_PRIMARY_URL} | sed -E 's/:[0-9]+//'):3000"
 browser-sync start -c /var/www/html/.ddev/browser-sync.cjs  | grep -v "Access URLs\|--------------------\|Local: http\|External: http"
