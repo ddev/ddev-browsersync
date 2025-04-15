@@ -2,6 +2,7 @@
 let docroot = process.env.DDEV_DOCROOT;
 let filesdir = process.env.DDEV_FILES_DIR;
 let url = process.env.DDEV_HOSTNAME;
+let nonSslUrl = process.env.DDEV_PRIMARY_URL.replace( /^https:/, 'http:' )
 
 if (filesdir === "") {
     filesdir = null
@@ -15,7 +16,7 @@ module.exports = {
     ui: false,
     server: false,
     proxy: {
-        target: "localhost"
+        target: nonSslUrl
     },
     host: url,
 }
