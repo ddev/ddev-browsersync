@@ -133,6 +133,9 @@ ddev exec npm run watch
 
 ### WordPress Configuration Changes
 
+When this add-on is added to a WordPress project, DDEV's management of the installation files is turned
+off. 
+
 The changes this add-on makes to the `wp-config-ddev.php` file during installation can be seen below.
 
 The `wp-config-ddev-browserync.php` file is included before the `/** WP_HOME URL */` comment.

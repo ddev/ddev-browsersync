@@ -7,9 +7,9 @@ then
   exit 0
 fi
 
-if ( ddev debug configyaml 2>/dev/null | grep 'disable_settings_management:\s*true' >/dev/null 2>&1 ) ; then
-  exit 0
-fi
+# if ( ddev debug configyaml 2>/dev/null | grep 'disable_settings_management:\s*true' >/dev/null 2>&1 ) ; then
+#   exit 0
+# fi
 
 cp scripts/wp-config-ddev-browsersync.php $DDEV_APPROOT/
 
