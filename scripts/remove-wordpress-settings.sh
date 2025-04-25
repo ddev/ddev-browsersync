@@ -7,9 +7,9 @@ then
   exit 0
 fi
 
-if ( ddev debug configyaml 2>/dev/null | grep 'disable_settings_management:\s*true' >/dev/null 2>&1 ) ; then
-  exit 0
-fi
+# if ( ddev debug configyaml 2>/dev/null | grep 'disable_settings_management:\s*true' >/dev/null 2>&1 ) ; then
+#   exit 0
+# fi
 
 if [ $DDEV_DOCROOT != "" ]; then
   DDEV_SITE_PATH="${DDEV_APPROOT}/${DDEV_DOCROOT}" ;

@@ -1,3 +1,4 @@
+[![add-on registry](https://img.shields.io/badge/DDEV-Add--on_Registry-blue)](https://addons.ddev.com)
 [![tests](https://github.com/ddev/ddev-browsersync/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/ddev/ddev-browsersync/actions/workflows/tests.yml?query=branch%3Amain)
 [![last commit](https://img.shields.io/github/last-commit/ddev/ddev-browsersync)](https://github.com/ddev/ddev-browsersync/commits)
 [![release](https://img.shields.io/github/v/release/ddev/ddev-browsersync)](https://github.com/ddev/ddev-browsersync/releases/latest)
@@ -132,6 +133,9 @@ ddev exec npm run watch
 - Browsersync will be running on **HTTPS** at `https://browsersync-demo.ddev.site:3000`
 
 ### WordPress Configuration Changes
+
+When this add-on is added to a WordPress project, DDEV's management of the installation files is turned
+off. 
 
 The changes this add-on makes to the `wp-config-ddev.php` file during installation can be seen below.
 

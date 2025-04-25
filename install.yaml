@@ -34,6 +34,13 @@ post_install_actions:
     #ddev-nodisplay
     #ddev-description:Install browsersync settings for WordPress if applicable
     scripts/setup-wordpress-settings.sh
+  - |
+    #ddev-nodisplay
+    #ddev-description:Check for WordPress and disable ddev management of wp-config file
+    if [[ $DDEV_PROJECT_TYPE = 'wordpress' ]]; then 
+      ddev config --disable-settings-management=true;
+    fi
+
 
 removal_actions:
   - |
@@ -46,3 +53,9 @@ removal_actions:
     fi
     rm -f "${DDEV_SITE_PATH}/wp-config-ddev-browsersync.php"
     scripts/remove-wordpress-settings.sh
+  # Don't automatically renable settings management in case user didn't have it enabled in the first place
+  - |
+    if [[ $DDEV_PROJECT_TYPE = 'wordpress' ]]; then 
+      echo "Note: You may wish to renable ddev's management of the wp-config file:"
+      echo "     Run 'ddev config --disable-settings-management=false && ddev restart'"
+    fi
