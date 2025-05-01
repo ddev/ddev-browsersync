@@ -11,14 +11,20 @@ fi
 #   exit 0
 # fi
 
-cp scripts/wp-config-ddev-browsersync.php $DDEV_APPROOT/
+if [ $DDEV_DOCROOT != "" ]; then
+  DDEV_SITE_PATH="${DDEV_APPROOT}/${DDEV_DOCROOT}" ;
+else
+  DDEV_SITE_PATH=$DDEV_APPROOT
+fi
 
-SETTINGS_FILE_NAME="${DDEV_APPROOT}/wp-config.php"
+cp scripts/wp-config-ddev-browsersync.php $DDEV_SITE_PATH/
+
+SETTINGS_FILE_NAME="${DDEV_SITE_PATH}/wp-config.php"
 
 echo "Settings file name: ${SETTINGS_FILE_NAME}"
 
 # If wp-config.php already contains the require_once() then exit early.
-if grep -q "/\*\* Include for ddev-browsersync to modify WP_HOME and WP_SITEURL. \*/" ${DDEV_APPROOT}/wp-config.php; then
+if grep -q "/\*\* Include for ddev-browsersync to modify WP_HOME and WP_SITEURL. \*/" ${DDEV_SITE_PATH}/wp-config.php; then
    exit 0
 fi
 
@@ -37,7 +43,7 @@ awk '
     next
 }
 {print}
-' ${DDEV_APPROOT}/wp-config.php > ${DDEV_APPROOT}/wp-config-temp.php
+' ${DDEV_SITE_PATH}/wp-config.php > ${DDEV_SITE_PATH}/wp-config-temp.php
 
 # Replace the real config file with the modified version in temporary file.
-mv ${DDEV_APPROOT}/wp-config-temp.php ${DDEV_APPROOT}/wp-config.php
+mv ${DDEV_SITE_PATH}/wp-config-temp.php ${DDEV_SITE_PATH}/wp-config.php

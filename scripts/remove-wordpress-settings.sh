@@ -11,7 +11,13 @@ fi
 #   exit 0
 # fi
 
-SETTINGS_FILE_NAME="${DDEV_APPROOT}/wp-config.php"
+if [ $DDEV_DOCROOT != "" ]; then
+  DDEV_SITE_PATH="${DDEV_APPROOT}/${DDEV_DOCROOT}" ;
+else
+  DDEV_SITE_PATH=$DDEV_APPROOT
+fi
+
+SETTINGS_FILE_NAME="${DDEV_SITE_PATH}/wp-config.php"
 
 echo "Removing wp-config-ddev-browsersync.php from: ${SETTINGS_FILE_NAME}"
 
@@ -20,5 +26,5 @@ awk '
 /\/\*\* Include for ddev-browsersync to modify WP_HOME and WP_SITEURL\./ { skip=1 }
 skip && /\}.*$/ { skip=0; getline; next }
 !skip
-' ${DDEV_APPROOT}/wp-config.php > ${DDEV_APPROOT}/wp-config-temp.php
-mv ${DDEV_APPROOT}/wp-config-temp.php ${DDEV_APPROOT}/wp-config.php
+' ${DDEV_SITE_PATH}/wp-config.php > ${DDEV_SITE_PATH}/wp-config-temp.php
+mv ${DDEV_SITE_PATH}/wp-config-temp.php ${DDEV_SITE_PATH}/wp-config.php

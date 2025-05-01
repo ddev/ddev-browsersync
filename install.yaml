@@ -46,7 +46,12 @@ removal_actions:
   - |
     #ddev-nodisplay
     #ddev-description:Remove browsersync settings for WordPress if applicable
-    rm -f "${DDEV_APPROOT}/wp-config-ddev-browsersync.php"
+    if [ $DDEV_DOCROOT != "" ]; then
+      DDEV_SITE_PATH="${DDEV_APPROOT}/${DDEV_DOCROOT}" ;
+    else
+      DDEV_SITE_PATH=$DDEV_APPROOT
+    fi
+    rm -f "${DDEV_SITE_PATH}/wp-config-ddev-browsersync.php"
     scripts/remove-wordpress-settings.sh
   # Don't automatically renable settings management in case user didn't have it enabled in the first place
   - |
