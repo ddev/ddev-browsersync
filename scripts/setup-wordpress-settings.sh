@@ -35,7 +35,7 @@ awk '
 /\/\/ Include for settings managed by ddev./ {
     print "/** Include for ddev-browsersync to modify WP_HOME and WP_SITEURL. */"
     print "$ddev_browsersync_settings = __DIR__ . '\''/wp-config-ddev-browsersync.php'\'';"
-    print "if ( getenv( '\''IS_DDEV_PROJECT'\'' ) == 'true' && is_readable( $ddev_browsersync_settings ) ) {"
+    print "if ( getenv( '\''IS_DDEV_PROJECT'\'' ) == '\''true'\'' && is_readable( $ddev_browsersync_settings ) ) {"
     print "    require_once( $ddev_browsersync_settings );"
     print "}"
     print ""
