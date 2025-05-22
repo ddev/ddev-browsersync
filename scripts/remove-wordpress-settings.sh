@@ -2,7 +2,7 @@
 #ddev-generated
 set -e
 
-if [[ $DDEV_PROJECT_TYPE != wordpress ]] ;
+if [[ "$DDEV_PROJECT_TYPE" != "wordpress" ]] ;
 then
   exit 0
 fi
@@ -11,7 +11,7 @@ fi
 #   exit 0
 # fi
 
-if [ $DDEV_DOCROOT != "" ]; then
+if [ "$DDEV_DOCROOT" != "" ]; then
   DDEV_SITE_PATH="${DDEV_APPROOT}/${DDEV_DOCROOT}" ;
 else
   DDEV_SITE_PATH=$DDEV_APPROOT
