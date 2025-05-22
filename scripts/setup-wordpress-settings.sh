@@ -2,7 +2,7 @@
 #ddev-generated
 set -e
 
-if [[ $DDEV_PROJECT_TYPE != wordpress ]] ;
+if [[ "$DDEV_PROJECT_TYPE" != "wordpress" ]] ;
 then
   exit 0
 fi
@@ -11,7 +11,7 @@ fi
 #   exit 0
 # fi
 
-if [ $DDEV_DOCROOT != "" ]; then
+if [ "$DDEV_DOCROOT" != "" ]; then
   DDEV_SITE_PATH="${DDEV_APPROOT}/${DDEV_DOCROOT}" ;
 else
   DDEV_SITE_PATH=$DDEV_APPROOT
@@ -35,7 +35,7 @@ awk '
 /\/\/ Include for settings managed by ddev./ {
     print "/** Include for ddev-browsersync to modify WP_HOME and WP_SITEURL. */"
     print "$ddev_browsersync_settings = dirname( __FILE__ ) . \"/wp-config-ddev-browsersync.php\";"
-    print "if ( is_readable( $ddev_browsersync_settings ) ) {"
+    print "if (  getenv( \"IS_DDEV_PROJECT\" ) == \"true\" && is_readable( $ddev_browsersync_settings ) ) {"
     print "    require_once( $ddev_browsersync_settings );"
     print "}"
     print ""
