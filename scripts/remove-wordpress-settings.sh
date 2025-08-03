@@ -26,5 +26,5 @@ awk '
 /\/\*\* Include for ddev-browsersync to modify WP_HOME and WP_SITEURL\./ { skip=1 }
 skip && /\}.*$/ { skip=0; getline; next }
 !skip
-' ${DDEV_SITE_PATH}/wp-config.php > ${DDEV_SITE_PATH}/wp-config-temp.php
-mv ${DDEV_SITE_PATH}/wp-config-temp.php ${DDEV_SITE_PATH}/wp-config.php
+' "${DDEV_SITE_PATH}/wp-config.php" > "${DDEV_SITE_PATH}/wp-config-temp.php"
+mv "${DDEV_SITE_PATH}/wp-config-temp.php" "${DDEV_SITE_PATH}/wp-config.php"
